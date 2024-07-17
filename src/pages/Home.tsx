@@ -1,11 +1,13 @@
-import TopBar from "../components/Navbar/TopBar"
 import MainLayout from "../layouts/MainLayout"
+import ContainerLayout from "../layouts/ContainerLayout"
 const Home = () => {
-    return (
+  return (
     <>
       <MainLayout>
         <main>
-          <h1 className="text-2xl font-semibold">Home</h1>
+          <ContainerLayout>
+            <h1 className="text-2xl font-semibold">Home</h1>
+          </ContainerLayout>
         </main>
       </MainLayout>
     </>
