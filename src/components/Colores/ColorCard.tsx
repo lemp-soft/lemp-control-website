@@ -9,7 +9,7 @@ const ColorCard = ({ description, hexa, title }: ColorCardProps) => {
     const [bgcolor, setBgcolor] = useState(hexa)
     return (
         <div className="flex flex-row rounded-lg overflow-hidden shadow-lg">
-            <div className="w-1/2 h-full cursor-pointer"
+            <div className={`w-1/2 h-full ${bgcolor == hexa ? '' : 'cursor-pointer'}`}
                 style={{ backgroundColor: bgcolor }}
                 onClick={() => setBgcolor(hexa)}></div>
             <div className="w-1/2 p-4">
