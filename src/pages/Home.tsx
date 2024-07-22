@@ -6,7 +6,7 @@ const Home = () => {
       <MainLayout>
         <main>
           <ContainerLayout>
-            <h1 className="text-2xl font-semibold">Home</h1>
+            <h1>inicio</h1>
           </ContainerLayout>
         </main>
       </MainLayout>
