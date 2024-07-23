@@ -1,9 +1,7 @@
 import { useState } from "react"
-import { TiposTerceros } from "../../types/TiposTerceros"
-
+import tiposTerceros from "../../recursos/tipos-de-terceros.json"
 const CreateTerceroForm = () => {
     const [modal, setModal] = useState(true)
-    const [tercerosTipos, setTercerosTipos] = useState<TiposTerceros[] | undefined>(undefined)
     return (
         <div id="crud-modal" tabIndex={modal ? -1 : 2} className={` ${!modal ? 'hidden' : ''} overflow-y-auto ${!modal ? 'overflow-x-hidden' : ''} fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
             <div className="w-4/5 h-5/6 p-4 bg-white rounded-2xl">
@@ -11,7 +9,12 @@ const CreateTerceroForm = () => {
                     <div>
                         <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de contribuyente</label>
                         <select id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                            <option selected>-- seleccione --</option>
+                            {
+                                tiposTerceros.map((tipo, index) => (
+                                    <option key={index} value={tipo.nombre}>{tipo.codigo} - {tipo.nombre}</option>
+                                ))
+                            }
                         </select>
                     </div>
                     <div>

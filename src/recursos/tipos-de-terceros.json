@@ -1,0 +1,18 @@
+[
+    {
+      "codigo": 42,
+      "nombre": "Documento de identificacion Extranjero"
+    },
+    {
+      "codigo": 47,
+      "nombre": "Permiso Especial de Permanencia PEP"
+    },
+    {
+      "codigo": 48,
+      "nombre": "Permiso por Proteccion Temporal PPT"
+    },
+    {
+      "codigo": 50,
+      "nombre": "NIT de otro pais"
+    }
+  ]
