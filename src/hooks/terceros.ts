@@ -20,16 +20,25 @@ export function useTerceros() {
     })
     return { data, isLoading, isError }
 }
+interface fechedTercerosPaginados {
+    data: Terceros[]
+    message: string
+    status: string
+    pagina: string
+    siguiente: number
+    anterior: number
+    max_pages: number
+}
 export function useTercerosPaginados(page: number = 1, elementosPorPagina: number = 7) {
     const { data, isLoading, isError } = useQuery({
-        queryKey: ['terceros', page],
+        queryKey: ['terceros', page, elementosPorPagina],
         queryFn: async () => {
-            const response = await fetch(`http://127.0.0.1:8000/api/v1/terceros/paginado?elementos=${elementosPorPagina}&pagina=${page}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/terceros/paginado?elementos=${elementosPorPagina}&pagina=${page}`,{
                 headers: {
                     Authorization: localStorage.getItem('token') ?? ''
                 }
             })
-            return response.json()
+            return response.json() as Promise<fechedTercerosPaginados>
         }
     })
     return { data, isLoading, isError }
