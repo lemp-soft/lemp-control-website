@@ -1,12 +1,5 @@
-interface fechedTerceros {
-  data: Terceros[]
-  message: string
-  status: string
-
-}
 import MainLayout from "../../layouts/MainLayout"
 import ContainerLayout from "../../layouts/ContainerLayout"
-import { Terceros } from "../../types/terceros"
 import MainTable from "../../components/Table/MainTable"
 import { useTerceros } from "../../hooks/useTerceros"
 import CreateTerceroForm from "../../components/Form/CreateTerceroForm"
