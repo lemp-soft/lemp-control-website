@@ -3,7 +3,6 @@ interface Props {
     toggleModal: () => void
 }
 import { useRecursos } from "../../hooks/useRecursos"
-import tiposTerceros from "../../recursos/tipos-de-terceros.json"
 const CreateTerceroForm = ({ modal, toggleModal }: Props) => {
     const { data} = useRecursos("tipos-de-terceros")
     return (
