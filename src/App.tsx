@@ -8,6 +8,7 @@ import Empresas from './pages/Administracion/Empresas';
 import Iniciar from './pages/sesiones/Iniciar';
 import AdministracionPage from './pages/Administracion';
 import UsuariosPage from './pages/Administracion/Usuarios';
+import CrearTercero from './pages/Administracion/Terceros/CrearTercero';
 const queryClient = new QueryClient();
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
 
         <Route path="/administracion" element={<AdministracionPage />} />
         <Route path="/administracion/terceros" element={<TercerosPage />} />
+        <Route path="/administracion/terceros/crear" element={<CrearTercero />} />
         <Route path="/administracion/empresas" element={<Empresas />} />
         <Route path="/administracion/usuarios" element={<UsuariosPage />} />
         <Route path="/recursos/colores" element={<Colores />} />
