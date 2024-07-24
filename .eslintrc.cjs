@@ -1,11 +1,13 @@
+const { parse } = require("postcss");
+
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: [
+    './node_modules/ts-standard/eslintrc.json',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    './node_modules/ts-standard/eslintrc.json'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -15,5 +17,11 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+  },
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: 12,
+    sourceType: 'module',
+    project: './tsconfig.json'
   },
 }
