@@ -5,7 +5,6 @@ import { useTerceros } from "../../hooks/terceros"
 import CreateTerceroForm from "../../components/Form/CreateTerceroForm"
 import { useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
-import PaginationMainTable from "../../components/Pagination/PaginationMainTable"
 const TercerosPage = () => {
   const { data, isLoading, isError, setSearch, setCurrentPage } = useTerceros({
     elementosPorPagina: 10
