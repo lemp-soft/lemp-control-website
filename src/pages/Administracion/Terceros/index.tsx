@@ -4,6 +4,7 @@ import MainTable from "../../../components/Table/MainTable"
 import { useTerceros } from "../../../hooks/terceros"
 import { useDebouncedCallback } from "use-debounce"
 import { Link } from "react-router-dom"
+import { useEffect } from "react"
 const TercerosPage = () => {
   const { data, isLoading, isError, setSearch, setCurrentPage } = useTerceros({
     elementosPorPagina: 10
@@ -15,7 +16,10 @@ const TercerosPage = () => {
     setSearch(e.target.value)
   }
     , 500)
-
+  useEffect(() => {
+    // verificar si la ruta anterior es /administracion/terceros/crear y si es asi recargar la pagina
+  }, [])
+  
   return (
     <MainLayout>
       <main>
