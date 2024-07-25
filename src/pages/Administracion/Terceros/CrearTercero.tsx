@@ -74,27 +74,26 @@ const CrearTercero = () => {
                                 <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsabilidades Fiscales :</label>
                                 <select id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option selected>-- seleccione --</option>
-                                    <option value="US">United States</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="FR">France</option>
-                                    <option value="DE">Germany</option>
+                                    <option value="O-13 Gran Contribuyente">O-13 Gran Contribuyente</option>
+                                    <option value="O-15 Autorretenedor">O-15 Autorretenedor</option>
+                                    <option value="O-23 Agente de Retención IVA">O-23 Agente de Retención IVA</option>
+                                    <option value="O-47 Regimen Simple de Tributación">O-47 Regimen Simple de Tributación</option>
+                                    <option value="R-99-PN No aplica, otros">R-99-PN No aplica, otros</option>
                                 </select>
                             </div>
                             <div>
                                 <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Régimen Fiscal :</label>
                                 <select id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option selected>-- seleccione --</option>
-                                    <option value="US">United States</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="FR">France</option>
-                                    <option value="DE">Germany</option>
+                                    <option value="48 - Responsable del impuesto sobre las ventas - IVA">48 - Responsable del impuesto sobre las ventas - IVA</option>
+                                    <option value="49 - no responsable de IVA">49 - no responsable de IVA</option>
                                 </select>
                             </div>
                             <div>
                                 <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estado :</label>
                                 <select id="countries" className="w-2/5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option selected>activo</option>
-                                    <option value="DE">inactivo</option>
+                                    <option selected value="true">activo</option>
+                                    <option value="false">inactivo</option>
                                 </select>
                             </div>
                             <div>
@@ -111,5 +110,4 @@ const CrearTercero = () => {
         </MainLayout>
     )
 }
-
 export default CrearTercero
