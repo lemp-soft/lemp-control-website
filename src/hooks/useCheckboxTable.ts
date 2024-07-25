@@ -1,36 +1,38 @@
-import { useEffect } from 'react'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 interface Check { name: string, active: boolean }
 interface UseCheckboxTable {
     columns: Check[]
     setColumns: (columns: Check[]) => void
+    compare: (columns: Check[]) => Check[]
 }
 const useCheckboxStore = (name: string) => {
-    const useCheck = create<UseCheckboxTable>()(persist((set) => ({
+    const useCheck = create<UseCheckboxTable>()(persist((set, get) => ({
         columns: [],
         setColumns: (columns: Check[]) => set({ columns }),
+        compare: (columns: Check[]) => {
+            const column = get().columns
+            if (column.length != columns.length) {
+                set({ columns })
+            }
+            if (column.length === columns.length) {
+                //verificar si los arrays son distintos
+                const isDifferent = columns.some((column, index) => column.name !== columns[index].name && column.active !== columns[index].active)
+                if (isDifferent) {
+                    set({ columns })
+                }
+            }
+            return column
+        }
+
     }), { name }))
     return useCheck
 }
-export function useCheckboxTable(name: string, columnsObject: Check[]) {
+export function useCheckboxTable(name: string) {
     const useColumnStore = useCheckboxStore(name)
-    // si la store tiene columnas guardadas se muestran
     const column = useColumnStore(state => state.columns)
     const setColumnsStore = useColumnStore(state => state.setColumns)
-    useEffect(() => {
-        if (column.length != columnsObject.length) {
-            setColumnsStore(columnsObject)
-        }
-        // verificar de si columns es igual a colums de la store si tiene los mismos names
-        // si no son iguales se actualiza la store
-        if (column.length === columnsObject.length) {
-            //verificar si los arrays son distintos
-            const isDifferent = columnsObject.some((column, index) => column.name !== columnsObject[index].name && column.active !== columnsObject[index].active)
-            if (isDifferent) {
-                setColumnsStore(columnsObject)
-            }
-        }
-    }, [])
-    return { column, setColumnsStore }
+    const compare = useColumnStore(state => state.compare)
+    return { column, setColumnsStore, compare }
 }
