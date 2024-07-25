@@ -54,7 +54,7 @@ export function useCrearTercero() {
             })
             return await fetchEmpresa.json()
         },
-        onSuccess: (empresa: Terceros) => {
+        onSuccess: () => {
             // actualizar la cachede las Terceros
             // Invalidar y refetch de la consulta de terceros
             queryClient.invalidateQueries({

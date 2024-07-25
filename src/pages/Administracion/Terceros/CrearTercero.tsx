@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useRecursos } from "../../../hooks/useRecursos"
 import { useCrearTercero } from "../../../hooks/terceros"
-import { useNavigate } from "react-router-dom"
 import ContainerLayout from "../../../layouts/ContainerLayout"
 import MainLayout from "../../../layouts/MainLayout"
 interface FormTercero {
