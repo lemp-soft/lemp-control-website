@@ -15,8 +15,6 @@ const App: React.FC = () => {
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* grupo de rutas /administracion */}
-
         <Route path="/administracion" element={<AdministracionPage />} />
         <Route path="/administracion/terceros" element={<TercerosPage />} />
         <Route path="/administracion/terceros/crear" element={<CrearTercero />} />
