@@ -148,6 +148,15 @@ function MainTableWithData<T extends object>({ data, pagination, name }: MainTab
                                 </tr>
                             ))
                         }
+                        {
+                            data.length !== 10 && Array.from({ length: 10 - data.length +1 }, (_, i) => i).map((_, index) => (
+                                <tr key={index} className="bg-white dark:bg-gray-800">
+                                    {
+                                        column.map((column, index) => column.active && <td key={index} className="px-6 py-6 whitespace-nowrap"></td>)
+                                    }
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
@@ -188,6 +197,10 @@ function MainTableError() {
 function MainTableSkeletonRow() {
     return (
         <tr className="bg-white dark:bg-gray-800">
+            <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
+            <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
+            <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
+            <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
             <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
             <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
             <td className="px-6 py-4 whitespace-nowrap"><div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div></td>
