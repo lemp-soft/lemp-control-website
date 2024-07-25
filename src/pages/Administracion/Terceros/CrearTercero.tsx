@@ -24,13 +24,10 @@ interface FormTercero {
 }
 const CrearTercero = () => {
     const { data } = useRecursos("tipos-de-terceros")
-    const { crearTercero, isPending, Error } = useCrearTercero()
-    const navigate = useNavigate()
+    const { crearTercero } = useCrearTercero()
     const {
         register,
         handleSubmit,
-        watch,
-        formState: { errors },
     } = useForm<FormTercero>()
     const onSubmit: SubmitHandler<FormTercero> = data => {
         // crear un tercero
