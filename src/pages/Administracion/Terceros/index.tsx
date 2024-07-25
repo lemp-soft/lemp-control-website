@@ -2,8 +2,6 @@ import MainLayout from "../../../layouts/MainLayout"
 import ContainerLayout from "../../../layouts/ContainerLayout"
 import MainTable from "../../../components/Table/MainTable"
 import { useTerceros } from "../../../hooks/terceros"
-import CreateTerceroForm from "../../../components/Form/CreateTerceroForm"
-import { useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
 import { Link } from "react-router-dom"
 const TercerosPage = () => {
