@@ -1,7 +1,8 @@
 import { MainTableProps } from "./MainTable"
 import { useCheckboxTable } from "../../hooks/useCheckboxTable"
+import { useNavigate } from "react-router-dom"
 import PaginationMainTable from "../Pagination/PaginationMainTable"
-function MainTableWithData<T extends object>({ data, pagination, name }: MainTableProps<T>) {
+function MainTableWithData<T extends object>({ data, pagination, name, haddleEdit }: MainTableProps<T>) {
     if (typeof data === 'undefined') {
         return <div>aqui nunca dentra</div>
     }
@@ -24,7 +25,11 @@ function MainTableWithData<T extends object>({ data, pagination, name }: MainTab
                             data.map((row, index) => (
                                 <tr key={index} className="bg-white dark:bg-gray-800">
                                     {
-                                        column.map((column, index) => column.active && <td key={index} className="px-6 py-4 whitespace-nowrap">{String(row[column.name as keyof typeof row])}</td>)
+                                        column.map((column, index) => column.active && <td onClick={()=>{
+                                            if(name === 'terceros'){
+                                                haddleEdit(String(row.nit))
+                                            }
+                                        }} key={index} className="px-6 py-4 whitespace-nowrap cursor-pointer">{String(row[column.name as keyof typeof row])}</td>)
                                     }
                                 </tr>
                             ))

@@ -37,6 +37,20 @@ export function useTerceros({
     })
     return { data, isLoading, isError, setSearch, setCurrentPage }
 }
+export function useTercero(nit: string) {
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['tercero', nit],
+        queryFn: async () => {
+            const response = await fetch('http://127.0.0.1:8000/api/v1/terceros/'+ nit,{
+                headers: {
+                    Authorization: localStorage.getItem('token') ?? ''
+                }
+            })
+            return response.json() as Promise<Terceros>
+        }
+    })
+    return { data, isLoading, isError }
+}
 export function useCrearTercero() {
     // crear una empresa
     const navigate = useNavigate()

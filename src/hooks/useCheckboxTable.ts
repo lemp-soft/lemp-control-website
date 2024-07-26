@@ -1,7 +1,7 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-interface Check { name: string, active: boolean }
+export interface Check { name: string, active: boolean }
 interface UseCheckboxTable {
     columns: Check[]
     setColumns: (columns: Check[]) => void

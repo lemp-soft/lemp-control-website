@@ -13,8 +13,9 @@ export interface MainTableProps<T> {
     error?: boolean
     pagination?: PaginationProps
     name: string
+    haddleEdit: (id: string) => void
 }
-const MainTable = <T extends object>({ data = [], error, loading, pagination, name }: MainTableProps<T>) => {
+const MainTable = <T extends object>({ data = [], error, loading, pagination, name,haddleEdit }: MainTableProps<T>) => {
     if (loading) {
         return <MainTableSkeleton />
     }
@@ -22,7 +23,7 @@ const MainTable = <T extends object>({ data = [], error, loading, pagination, na
         return <MainTableError />
     }
     if (data.length) {
-        return <MainTableWithData data={data} pagination={pagination} name={name} />
+        return <MainTableWithData data={data} pagination={pagination} name={name} haddleEdit={haddleEdit} />
     }
     return <MainTableNoData />
 }
