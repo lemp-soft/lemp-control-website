@@ -1,6 +1,5 @@
 import { MainTableProps } from "./MainTable"
 import { useCheckboxTable } from "../../hooks/useCheckboxTable"
-import { useNavigate } from "react-router-dom"
 import PaginationMainTable from "../Pagination/PaginationMainTable"
 function MainTableWithData<T extends object>({ data, pagination, name, haddleEdit }: MainTableProps<T>) {
     if (typeof data === 'undefined') {

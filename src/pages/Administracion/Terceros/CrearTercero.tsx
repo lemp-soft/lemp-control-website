@@ -3,9 +3,12 @@ import { useRecursos } from "../../../hooks/useRecursos"
 import { useCrearTercero } from "../../../hooks/terceros"
 import ContainerLayout from "../../../layouts/ContainerLayout"
 import MainLayout from "../../../layouts/MainLayout"
+import { useEffect, useState } from "react"
+import { Municipio } from "../../../types/municipio"
 interface FormTercero {
     nit: number
     id_municipio: number
+    id_departamento: number
     tipo: number
     dv: string
     primer_apellido: string
@@ -23,11 +26,14 @@ interface FormTercero {
 }
 const CrearTercero = () => {
     const { data } = useRecursos("tipos-de-terceros")
+    const { data: dataDepartamentos } = useRecursos("departamentos")
     const { crearTercero } = useCrearTercero()
     const {
         register,
         handleSubmit,
+        watch
     } = useForm<FormTercero>()
+    const [municipios, setMunicipios] = useState<Municipio[] | undefined>(undefined)
     const onSubmit: SubmitHandler<FormTercero> = data => {
         // crear un tercero
         crearTercero({
@@ -47,6 +53,16 @@ const CrearTercero = () => {
             "responsabilidades": data.responsabilidades
         })
     }
+    useEffect(() => {
+        if (watch("id_departamento")) {
+            fetch(`http://127.0.0.1:8000/api/v1/recursos/municipios?departamento=${watch("id_departamento")}`)
+                .then(res => res.json())
+                .then(data => {
+                    setMunicipios(data.data as Municipio[])
+                })
+            console.log(watch("id_departamento"))
+        }
+    }, [watch("id_departamento")])
     return (
         <MainLayout>
             <main>
@@ -100,10 +116,36 @@ const CrearTercero = () => {
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefono 2 :</label>
                                 <input type="number" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="##########"{...register("telefono_movil", { required: false })} />
                             </div>
-                            <div className="col-span-2">
-                                <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad/Departamento :</label>
-                                <input type="number" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ibague, medellin, cali..." required {...register("id_municipio", { required: true })} />
+                            <div className="col-span-1">
+                                <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
+                                <select {...register("id_departamento", { required: true })} id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                    {
+                                        dataDepartamentos?.data.map((tipo: any) => (
+                                            <option key={tipo.id} value={tipo.codigo}>{tipo.nombre_departamento}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
+                            {
+                                typeof municipios === "undefined" && (<div className="col-span-1">
+                                    <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipio</label>
+                                    <select disabled id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                        <option value="none">No - departamento</option>
+                                    </select>
+                                </div>)
+                            }
+                            {
+                                typeof municipios !== "undefined" && (<div className="col-span-1">
+                                    <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipios</label>
+                                    <select {...register("id_municipio", { required: true })} id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                        {
+                                            municipios.map((tipo: any) => (
+                                                <option key={tipo.codigo} value={tipo.codigo}>{tipo.nombre_municipio}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>)
+                            }
                             <div className="col-span-2">
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo electronico :</label>
                                 <input type="email" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ejemplecoreo@gmail.com" required {...register("correo", { required: true })} />
