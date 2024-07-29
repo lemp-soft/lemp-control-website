@@ -1,15 +1,18 @@
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, set } from "react-hook-form"
 import { useRecursos } from "../../../hooks/useRecursos"
 import { useCrearTercero, useEditarTercero, useTercero } from "../../../hooks/terceros"
 import ContainerLayout from "../../../layouts/ContainerLayout"
 import MainLayout from "../../../layouts/MainLayout"
 import { useParams } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { Municipio } from "../../../types/municipio"
+import { Departamento } from "../../../types/departamento"
 type regimenes = "48 - Responsable del impuesto sobre las ventas - IVA" | "49 - no responsable de IVA"
 type responsabilidades = "O-13 Gran Contribuyente" | "O-15 Autorretenedor" | "O-23 Agente de Retención IVA" | "O-47 Regimen Simple de Tributación" | "R-99-PN No aplica, otros"
 interface FormTercero {
     nit: number
     id_municipio: number
+    id_departamento: number
     tipo: number
     dv: string
     primer_apellido: string
@@ -21,17 +24,28 @@ interface FormTercero {
     telefono: number
     telefono_movil?: number
     correo: string
-    regimenes: regimenes
-    responsabilidades: responsabilidades
+    regimenes: "48 - Responsable del impuesto sobre las ventas - IVA" | "49 - no responsable de IVA"
+    responsabilidades: "O-13 Gran Contribuyente" | "O-15 Autorretenedor" | "O-23 Agente de Retención IVA" | "O-47 Regimen Simple de Tributación" | "R-99-PN No aplica, otros"
     estado: boolean
 }
 const EditarTerceroPage = () => {
+    // nit es el parametro que se recibe en la url
     const { nit } = useParams()
+    // obtener los tipos de terceros
     const { data } = useRecursos("tipos-de-terceros")
+    // obtener los departamentos
+    const { data: dataDepartamentos } = useRecursos("departamentos")
+    // editar un tercero
     const { editarTercero } = useEditarTercero(nit as string)
+    // obtener un tercero
     const { tercero } = useTercero(nit as string)
     const { data: dataTercero } = tercero
-    const { register, handleSubmit,setValue } = useForm<FormTercero>()
+    // hook de react-hook-form
+    const { register, handleSubmit, setValue, watch } = useForm<FormTercero>()
+    // estados para municipio y departamento
+    const [municipio, setMunicipio] = useState<Municipio | undefined>(undefined)
+    const [municipios, setMunicipios] = useState<Municipio[] | undefined>(undefined)
+    const [departamento, setDepartamento] = useState<Departamento | undefined>(undefined)
     const onSubmit: SubmitHandler<FormTercero> = data => {
         // crear un tercero
         editarTercero({
@@ -71,6 +85,45 @@ const EditarTerceroPage = () => {
             setValue("responsabilidades", dataTercero.responsabilidades as responsabilidades)
         }
     }, [dataTercero])
+    useEffect(() => {
+        if (watch("id_municipio")) {
+            fetch(`http://127.0.0.1:8000/api/v1/recursos/municipios/${watch("id_municipio")}`)
+                .then(response => response.json())
+                .then(data => setMunicipio(data.data))
+        }
+    }, [watch("id_municipio")])
+    useEffect(() => {
+        if (typeof municipio !== "undefined") {
+            console.log(municipio, "municipio")
+            fetch(`http://127.0.0.1:8000/api/v1/recursos/municipios/${municipio.codigo}/departamento`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.data, "departamento fetch")
+                    setDepartamento(data.data)
+                })
+        }
+    }
+        , [municipio])
+    useEffect(() => {
+        if (departamento) {
+            setValue("id_departamento", departamento.codigo)
+        }
+    }, [departamento])
+    useEffect(() => {
+        if (dataTercero) {
+            setValue("id_municipio", municipio?.codigo as number)
+        }
+    }, [municipios])
+    useEffect(() => {
+        if (watch("id_departamento")) {
+            fetch(`http://127.0.0.1:8000/api/v1/recursos/municipios?departamento=${watch("id_departamento")}`)
+                .then(res => res.json())
+                .then(data => {
+                    setMunicipios(data.data as Municipio[])
+                    // setValue("id_municipio", data.data[0].codigo)
+                })
+        }
+    }, [watch("id_departamento")])
     return (
         <MainLayout>
             <main>
@@ -80,10 +133,10 @@ const EditarTerceroPage = () => {
                         <form className="mt-8 grid gap-6 mb-6 md:grid-cols-4" onSubmit={handleSubmit(onSubmit)}>
                             <div>
                                 <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de contribuyente</label>
-                                <select id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("tipo", { 
+                                <select id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {...register("tipo", {
                                     required: true,
                                     value: dataTercero?.tipo
-                                    })}>
+                                })}>
                                     {
                                         data?.data.map((tipo: any) => (
                                             <option key={tipo.id} value={tipo.codigo}>{tipo.codigo} - {tipo.nombre}</option>
@@ -127,10 +180,36 @@ const EditarTerceroPage = () => {
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefono 2 :</label>
                                 <input type="number" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="##########"{...register("telefono_movil", { required: false })} />
                             </div>
-                            <div className="col-span-2">
-                                <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciudad/Departamento :</label>
-                                <input type="number" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Ibague, medellin, cali..." required {...register("id_municipio", { required: true })} />
+                            <div className="col-span-1">
+                                <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Departamento</label>
+                                <select {...register("id_departamento", { required: true })} id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                    {
+                                        dataDepartamentos?.data.map((tipo: any) => (
+                                            <option key={tipo.id} value={tipo.codigo}>{tipo.nombre_departamento}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
+                            {
+                                typeof municipios === "undefined" && (<div className="col-span-1">
+                                    <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipio</label>
+                                    <select disabled id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                        <option value="none">No - departamento</option>
+                                    </select>
+                                </div>)
+                            }
+                            {
+                                typeof municipios !== "undefined" && (<div className="col-span-1">
+                                    <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Municipios</label>
+                                    <select {...register("id_municipio", { required: true })} id="countries" className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                        {
+                                            municipios.map((tipo: any) => (
+                                                <option key={tipo.codigo} value={tipo.codigo}>{tipo.nombre_municipio}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>)
+                            }
                             <div className="col-span-2">
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo electronico :</label>
                                 <input type="email" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ejemplecoreo@gmail.com" required {...register("correo", { required: true })} />
