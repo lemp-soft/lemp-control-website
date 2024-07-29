@@ -13,6 +13,7 @@
     "@tanstack/react-query": "^5.51.11",
     "@types/react-router-dom": "^5.3.3",
     "axios": "1.7.2",
+    "npm-hello-word-lemp": "^0.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "7.52.1",
