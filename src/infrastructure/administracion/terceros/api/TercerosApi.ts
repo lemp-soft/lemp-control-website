@@ -1,21 +1,22 @@
-import { Tercero, TerceroCreateDTO, TerceroUpdateDTO } from "../../../../domain/administracion/terceros/entities/tercero";
+import { TerceroApiResult, TerceroCreateDTO, TerceroUpdateDTO,Tercero } from "../../../../domain/administracion/terceros/entities/tercero";
+import { TerceroApiAdapter } from "../adapters/TerceroApiadapter";
 interface GetTercerosFetchResponse {
-    data: Tercero[]
+    data: TerceroApiResult[]
     status: string
     message: string
 }
 interface GetTerceroFetchResponse {
-    data: Tercero
+    data: TerceroApiResult
     status: string
     message: string
 }
 interface SaveTerceroFetchResponse {
-    data: Tercero
+    data: TerceroApiResult
     status: string
     message: string
 }
 interface  UpdateTerceroFetchResponse {
-    data: Tercero
+    data: TerceroApiResult
     status: string
     message: string
 }
@@ -28,7 +29,8 @@ export class TercerosApi {
                 }
             })
             const data = await response.json() as GetTerceroFetchResponse
-            return data.data
+            const dataAdapted = TerceroApiAdapter.ApiToEntity(data.data)
+            return dataAdapted
         } catch (error) {
             throw new Error('Error al obtener el tercero')
         }
@@ -44,7 +46,8 @@ export class TercerosApi {
                 }
             })
             const data = await response.json() as GetTercerosFetchResponse
-            return data.data
+            const dataAdapted = data.data.map(tercero => TerceroApiAdapter.ApiToEntity(tercero))
+            return dataAdapted
         } catch (error) {
             throw new Error('Error al obtener los terceros')
         }
@@ -60,7 +63,8 @@ export class TercerosApi {
                 body: JSON.stringify(tercero)
             })
             const data = await response.json() as SaveTerceroFetchResponse
-            return data.data
+            const dataAdapted = TerceroApiAdapter.ApiToEntity(data.data)
+            return dataAdapted
         } catch (error) {
             throw new Error('Error al guardar el tercero')
         }
@@ -76,7 +80,8 @@ export class TercerosApi {
                 body: JSON.stringify(tercero)
             })
             const data = await response.json() as UpdateTerceroFetchResponse
-            return data.data
+            const dataAdapted = TerceroApiAdapter.ApiToEntity(data.data)
+            return dataAdapted
         } catch (error) {
             throw new Error('Error al modificar el tercero')
         }

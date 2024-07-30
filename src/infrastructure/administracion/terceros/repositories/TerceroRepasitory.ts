@@ -1,4 +1,4 @@
-import { Tercero,TerceroCreateDTO,TerceroUpdateDTO } from "../../../../domain/administracion/terceros/entities/tercero";
+import { Tercero, TerceroApiResult,TerceroCreateDTO,TerceroUpdateDTO } from "../../../../domain/administracion/terceros/entities/tercero";
 import { GetTercero, GetTerceros, CreateTercero, UpdateTercero } from "../../../../domain/administracion/terceros/repositories/terceroRepository";
 import { TercerosApi } from "../api/TercerosApi";
 export class TerceroRepository implements GetTercero, GetTerceros, CreateTercero, UpdateTercero {

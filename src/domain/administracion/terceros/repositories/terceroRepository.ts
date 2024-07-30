@@ -1,4 +1,4 @@
-import { Tercero, TerceroCreateDTO, TerceroUpdateDTO } from "../entities/tercero";
+import { Tercero, TerceroApiResult, TerceroCreateDTO, TerceroUpdateDTO } from "../entities/tercero";
 export interface GetTercero {
     getTercero(codigo: number): Promise<Tercero>;
 }
