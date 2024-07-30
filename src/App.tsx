@@ -11,12 +11,14 @@ import UsuariosPage from './pages/Administracion/Usuarios';
 import CrearTercero from './pages/Administracion/Terceros/CrearTercero';
 import TerceroIdPage from './pages/Administracion/Terceros/TerceroId';
 import EditarTerceroPage from './pages/Administracion/Terceros/EditarTercero';
+import V2TercerosPage from './ui/terceros/pages/TercerosPage'
 const queryClient = new QueryClient();
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/v2/administracion/terceros' element={<V2TercerosPage />} />
         <Route path="/administracion" element={<AdministracionPage />} />
         <Route path="/administracion/terceros" element={<TercerosPage />} />
         <Route path="/administracion/terceros/:nit" element={<TerceroIdPage />} />
