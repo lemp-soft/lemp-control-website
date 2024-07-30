@@ -25,6 +25,7 @@ export interface Terceros {
   regimenes?: string;
   responsabilidades?: string;
   estado: boolean;
+  actividad_economica: number;
 }
 // tipo TerceroUpdate que tiene los mismos campos que Terceros pero todos son opcionales
 export type TerceroUpdate = Partial<Terceros>;

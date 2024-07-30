@@ -4,6 +4,7 @@ import { useCrearTercero } from "../../../hooks/terceros"
 import ContainerLayout from "../../../layouts/ContainerLayout"
 import MainLayout from "../../../layouts/MainLayout"
 import SearchUbication from "../../../components/Terceros/crear/SearchUbication"
+import SearchActividadEconomica from "../../../components/Terceros/crear/SearchActividadEconomica"
 export interface FormTercero {
     nit: number
     id_municipio: number
@@ -20,7 +21,8 @@ export interface FormTercero {
     correo: string
     regimenes: "48 - Responsable del impuesto sobre las ventas - IVA" | "49 - no responsable de IVA"
     responsabilidades: "O-13 Gran Contribuyente" | "O-15 Autorretenedor" | "O-23 Agente de Retención IVA" | "O-47 Regimen Simple de Tributación" | "R-99-PN No aplica, otros"
-    estado: boolean
+    estado: boolean,
+    actividad_economica: number
 }
 
 const CrearTercero = () => {
@@ -44,7 +46,8 @@ const CrearTercero = () => {
             "correo": data.correo,
             "codigo_ciiu": 6789012,
             "regimenes": data.regimenes,
-            "responsabilidades": data.responsabilidades
+            "responsabilidades": data.responsabilidades,
+            "actividad_economica": data.actividad_economica,
         })
     }
     // utiliza un debouncer para la busqueda de ubicaciones
@@ -106,10 +109,7 @@ const CrearTercero = () => {
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo electronico :</label>
                                 <input type="email" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ejemplecoreo@gmail.com" required {...register("correo", { required: true })} />
                             </div>
-                            <div className="col-span-4">
-                                <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Actividad economica principal :</label>
-                                <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="vender ropa..." required {...register("direccion", { required: true })} />
-                            </div>
+                            <SearchActividadEconomica setValue={setValue} />
                             <div>
                                 <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsabilidades Fiscales :</label>
                                 <select {

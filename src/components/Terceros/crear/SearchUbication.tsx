@@ -59,7 +59,7 @@ const SearchUbication = ({ setValue }: Props) => {
     })
     const [state, dispatch] = useReducer(reducer, initialState);
     // utiliza un debouncer para la busqueda de ubicaciones
-    const hanndleDebounceUbication = useDebouncedCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const hanndleDebounceUbication = useDebouncedCallback((_e: React.ChangeEvent<HTMLInputElement>) => {
         if (state.ubicationSearch.length === 0) {
             dispatch({
                 type: "SET_UBICACIONS",
