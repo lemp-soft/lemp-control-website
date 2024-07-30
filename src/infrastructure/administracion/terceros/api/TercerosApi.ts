@@ -1,4 +1,5 @@
 import { TerceroApiResult, TerceroCreateDTO, TerceroUpdateDTO,Tercero } from "../../../../domain/administracion/terceros/entities/tercero";
+import { TerceroTipo } from "../../../../domain/administracion/terceros/entities/tercero_tipo";
 import { TerceroApiAdapter } from "../adapters/TerceroApiadapter";
 interface GetTercerosFetchResponse {
     data: TerceroApiResult[]
@@ -17,6 +18,11 @@ interface SaveTerceroFetchResponse {
 }
 interface  UpdateTerceroFetchResponse {
     data: TerceroApiResult
+    status: string
+    message: string
+}
+interface GetTerceroTiposFetchResponse {
+    data: TerceroTipo[]
     status: string
     message: string
 }
@@ -46,6 +52,7 @@ export class TercerosApi {
                 }
             })
             const data = await response.json() as GetTercerosFetchResponse
+            console.log(data)
             const dataAdapted = data.data.map(tercero => TerceroApiAdapter.ApiToEntity(tercero))
             return dataAdapted
         } catch (error) {
@@ -84,6 +91,15 @@ export class TercerosApi {
             return dataAdapted
         } catch (error) {
             throw new Error('Error al modificar el tercero')
+        }
+    }
+    async getTercerosTipos(): Promise<TerceroTipo[]> {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/v1/recursos/tipos-de-terceros')
+            const data = await response.json() as GetTerceroTiposFetchResponse
+            return data.data
+        } catch (error) {
+            throw new Error('Error al obtener los tipos de terceros')
         }
     }
 

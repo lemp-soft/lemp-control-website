@@ -8,7 +8,7 @@ export class TerceroApiAdapter {
             telefono: terceroApiResult.telefono,
             correo: terceroApiResult.correo,
             tipo: terceroApiResult.tipo.nombre,
-            municipio: terceroApiResult.municipio.nombre_municipio,
+            municipio: terceroApiResult.municipio.nombre,
             actividad_economica: terceroApiResult.ciiu.concepto,
             estado: terceroApiResult.estado,
             regimenes: terceroApiResult.regimenes,
