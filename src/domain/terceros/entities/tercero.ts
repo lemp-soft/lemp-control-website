@@ -1,6 +1,6 @@
 export type regimenes = "48 - Responsable del impuesto sobre las ventas - IVA" | "49 - no responsable de IVA";
 export type responsabilidades = "O-13 Gran Contribuyente" | "O-15 Autorretenedor" | "O-23 Agente de Retención IVA" | "O-47 Regimen Simple de Tributación" | "R-99-PN No aplica, otros";
-export interface terceros {
+export interface Tercero {
     nit : number;
     id_municipio : number;
     tipo : number;
