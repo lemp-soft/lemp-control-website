@@ -16,7 +16,6 @@ export interface MainTableProps<T> {
     columns: CheckTable[]
 }
 const MainTable = <T extends Tercero>({ data, error, loading, name, haddleEdit, pagination, columns }: MainTableProps<T>) => {
-    const { actual_page, haddlePage, max_pages } = pagination
     if (loading) {
         return <MainTableSkeleton />
     }
@@ -24,7 +23,7 @@ const MainTable = <T extends Tercero>({ data, error, loading, name, haddleEdit, 
         return <MainTableError />
     }
     if (data && data.length) {
-        return <MainTableWithData data={data} actual_page={actual_page} haddlePage={haddlePage} max_pages={max_pages} pagination={pagination} columns={columns} />
+        return <MainTableWithData data={data} pagination={pagination} columns={columns} />
     }
     if (data && !data.length) {
         return <MainTableNoData />

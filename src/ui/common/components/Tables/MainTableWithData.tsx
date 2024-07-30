@@ -2,14 +2,11 @@ import { Tercero } from "../../../../domain/administracion/terceros/entities/ter
 import { CheckTable } from "../../../../shared/types/check_table"
 import PaginationMainTable, { PropsPaginationMainTable } from "../Paginations/PaginationMainTable"
 interface MainTableWithDataProps<T> {
-    max_pages: number,
-    actual_page: number,
-    haddlePage: (page: number) => void
     pagination: PropsPaginationMainTable
     data: T[]
     columns: CheckTable[]
 }
-export function MainTableWithData<T extends Tercero>({ actual_page, haddlePage, max_pages, pagination, data, columns }: MainTableWithDataProps<T>) {
+export function MainTableWithData<T extends Tercero>({ pagination, data, columns }: MainTableWithDataProps<T>) {
     return <>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
