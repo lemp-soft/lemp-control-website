@@ -1,4 +1,5 @@
 import { Tercero } from "../../../../domain/administracion/terceros/entities/tercero"
+import { CheckTable } from "../../../../shared/types/check_table"
 import { PropsPaginationMainTable } from "../Paginations/PaginationMainTable"
 import MainTableError from "./MainTableError"
 import MainTableNoData from "./MainTableNoData"
@@ -12,8 +13,9 @@ export interface MainTableProps<T> {
     name: string
     haddleEdit: (id: string) => void
     pagination: PropsPaginationMainTable
+    columns: CheckTable[]
 }
-const MainTable = <T extends Tercero>({ data, error, loading, name, haddleEdit, pagination }: MainTableProps<T>) => {
+const MainTable = <T extends Tercero>({ data, error, loading, name, haddleEdit, pagination, columns }: MainTableProps<T>) => {
     const { actual_page, haddlePage, max_pages } = pagination
     if (loading) {
         return <MainTableSkeleton />
@@ -22,7 +24,7 @@ const MainTable = <T extends Tercero>({ data, error, loading, name, haddleEdit, 
         return <MainTableError />
     }
     if (data && data.length) {
-        return <MainTableWithData data={data} actual_page={actual_page} haddlePage={haddlePage} max_pages={max_pages} pagination={pagination}/>
+        return <MainTableWithData data={data} actual_page={actual_page} haddlePage={haddlePage} max_pages={max_pages} pagination={pagination} columns={columns} />
     }
     if (data && !data.length) {
         return <MainTableNoData />

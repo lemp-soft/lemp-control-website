@@ -43,6 +43,7 @@ export interface Tercero extends Omit<TerceroDTO, "creado_en" | "actualizado_en"
     municipio: string,
     actividad_economica: string
     nombre: string
+    [key: string]: any;
 }
 export type TerceroCreateDTO = Omit<TerceroDTO, "error" | "imagen" | "clave_acceso" | "clave_firma" | "area" | "cargo" | "creado_en" | "actualizado_en" | "eliminado_en">;
 // todos los campos son opcionales
