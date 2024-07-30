@@ -15,7 +15,7 @@ export interface MainTableProps<T> {
     name: string
     haddleEdit: (id: string) => void
 }
-const MainTable = <T extends object>({ data = [], error, loading, pagination, name,haddleEdit }: MainTableProps<T>) => {
+const MainTable = <T extends object>({ data = [], error, loading, pagination, name, haddleEdit }: MainTableProps<T>) => {
     if (loading) {
         return <MainTableSkeleton />
     }
