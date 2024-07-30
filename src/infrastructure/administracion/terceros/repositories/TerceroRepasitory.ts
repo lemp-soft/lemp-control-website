@@ -9,8 +9,8 @@ export class TerceroRepository implements GetTercero, GetTerceros, CreateTercero
     async getTercero(codigo: number): Promise<Tercero> {
         return this.api.getTercero(codigo);
     }
-    async getTerceros(): Promise<Tercero[]> {
-        return this.api.getTerceros();
+    async getTerceros(elementosPorPagina?: number, search?: string, currentPage?: number): Promise<Tercero[]> {
+        return this.api.getTerceros(elementosPorPagina, search, currentPage);
     }
     async createTercero(tercero: TerceroCreateDTO): Promise<Tercero> {
         return this.api.saveTercero(tercero);

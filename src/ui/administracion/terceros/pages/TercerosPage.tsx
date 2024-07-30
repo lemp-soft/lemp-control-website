@@ -1,7 +1,13 @@
+import { useEffect } from "react"
 import ContainerLayout from "../../../../layouts/ContainerLayout"
 import MainLayout from "../../../../layouts/MainLayout"
+import { useTerceros } from "../hooks/useTerceros"
 
 const TercerosPage = () => {
+    const { data, isError, isLoading } = useTerceros({})
+    useEffect(()=>{
+        console.log(data)
+    },[data])
     return (
         <MainLayout>
             <main>

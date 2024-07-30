@@ -11,7 +11,7 @@ import UsuariosPage from './pages/Administracion/Usuarios';
 import CrearTercero from './pages/Administracion/Terceros/CrearTercero';
 import TerceroIdPage from './pages/Administracion/Terceros/TerceroId';
 import EditarTerceroPage from './pages/Administracion/Terceros/EditarTercero';
-import V2TercerosPage from './ui/terceros/pages/TercerosPage'
+import V2TercerosPage from './ui/administracion/terceros/pages/TercerosPage';
 const queryClient = new QueryClient();
 const App: React.FC = () => {
   return (
