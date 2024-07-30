@@ -28,3 +28,6 @@ export interface Tercero {
     estado : boolean;
     codigo_ciiu : number;
 }
+export type TerceroCreateDTO = Omit<Tercero, "id_municipio" | "tipo" | "error" | "imagen" | "clave_acceso" | "clave_firma" | "creado_en" | "actualizado_en" | "eliminado_en" | "estado">;
+// todos los campos son opcionales
+export type TerceroUpdateDTO = Partial<Tercero>;
