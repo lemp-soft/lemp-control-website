@@ -4,6 +4,7 @@ import { TerceroForm } from "../pages/CrearTercero";
 import { useEffect, useReducer } from "react";
 import { Ciiu } from "../../../../shared/types/ciiu";
 import { useQuery } from "@tanstack/react-query";
+import SearchActividadEconomica from "../../../../components/Terceros/crear/SearchActividadEconomica";
 interface ReducerState {
     ciius: { codigo: number, content: string }[];
     ciiuSearch: string;
@@ -45,6 +46,7 @@ export function useSearchInputActividadEconomica({ setValue }: { setValue: UseFo
         refetch()
     }, 300)
     const handdleUbicationSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+
         dispatch({
             type: "SET_CIIUS_SEARCH",
             payload: e.target.value
@@ -53,6 +55,11 @@ export function useSearchInputActividadEconomica({ setValue }: { setValue: UseFo
     }
     const handdleClick = (e: number) => {
         setValue("actividad_economica", e)
+        const ciiu = state.ciius.find((item) => item.codigo === e)
+        dispatch({
+            type:"SET_CIIUS_SEARCH",
+            payload: `${ciiu?.codigo} - ${ciiu?.content} `
+        })
         dispatch({
             type: "SET_CIIUS",
             payload: []
@@ -72,6 +79,6 @@ export function useSearchInputActividadEconomica({ setValue }: { setValue: UseFo
         isFetching,
         state,
         handdleSearch: handdleUbicationSearch,
-        handdleClick
+        handdleClick,
     }
 }

@@ -71,6 +71,11 @@ export function useSearchInputUbicacion({ setValue }: Props) {
     }
     const handdleClick = (e: number) => {
         setValue("id_municipio", e)
+        const municipio = state.ubicacions.find((municipio) => municipio.codigo === e)
+        dispatch({
+            type: "SET_UBICATION_SEARCH",
+            payload: `${municipio?.codigo} - ${municipio?.content} `
+        })
         dispatch({
             type: "SET_UBICACIONS",
             payload: []
@@ -80,7 +85,7 @@ export function useSearchInputUbicacion({ setValue }: Props) {
         if (!isLoading && !isError && !isFetching) {
             dispatch({
                 type: "SET_UBICACIONS",
-                payload: data?.data.map((municipio) => ({ codigo: municipio.codigo, content: municipio.municipio })) ?? []
+                payload: data?.data.map((municipio) => ({ codigo: municipio.codigo, content: municipio.departamento + "/" + municipio.municipio })) ?? []
             })
         }
     }, [isLoading, isError, isFetching, data])
@@ -90,6 +95,7 @@ export function useSearchInputUbicacion({ setValue }: Props) {
         isFetching,
         state,
         handdleSearch: handdleUbicationSearch,
-        handdleClick
+        handdleClick,
+        SearchUbication: state.ubicationSearch
     }
 }
