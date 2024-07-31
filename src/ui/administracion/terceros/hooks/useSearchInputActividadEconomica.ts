@@ -4,7 +4,6 @@ import { TerceroForm } from "../pages/CrearTercero";
 import { useEffect, useReducer } from "react";
 import { Ciiu } from "../../../../shared/types/ciiu";
 import { useQuery } from "@tanstack/react-query";
-import SearchActividadEconomica from "../../../../components/Terceros/crear/SearchActividadEconomica";
 interface ReducerState {
     ciius: { codigo: number, content: string }[];
     ciiuSearch: string;
