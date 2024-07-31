@@ -3,8 +3,8 @@ import { TerceroCreateDTO } from "../../../../domain/administracion/terceros/ent
 import ContainerLayout from "../../../common/layouts/ContainerLayout"
 import MainLayout from "../../../common/layouts/MainLayout"
 import { useCrearTercero, useTercerosTipos } from "../hooks"
-import SearchUbication from "../../../common/components/Searchs/SearchUbication"
-import SearchActividadEconomica from "../../../common/components/Searchs/SearchActividadEconomica"
+import SearchInputActividadEconomica from "../components/SearchInputActividadEconomica"
+import SearchInputUbicacion from "../components/SearchInputUbicacion"
 export interface TerceroForm extends Omit<TerceroCreateDTO, 'codigo_ciiu'> {
     actividad_economica: number
 }
@@ -83,12 +83,12 @@ const CrearTercero = () => {
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefono 2 :</label>
                                 <input type="number" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="##########"{...register("telefono_movil", { required: false })} />
                             </div>
-                            <SearchUbication setValue={setValue} />
+                            <SearchInputUbicacion setValue={setValue} />
                             <div className="col-span-2">
                                 <label form="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo electronico :</label>
                                 <input type="email" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ejemplecoreo@gmail.com" required {...register("correo", { required: true })} />
                             </div>
-                            <SearchActividadEconomica setValue={setValue} />
+                            <SearchInputActividadEconomica setValue={setValue} />
                             <div>
                                 <label form="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsabilidades Fiscales :</label>
                                 <select {
