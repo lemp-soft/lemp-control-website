@@ -5,6 +5,8 @@ import SearchInputUbicacion from "../components/SearchInputUbicacion"
 import InputBasic from "../../../common/components/Inputs/InputBasic"
 export interface TerceroForm extends Omit<TerceroCreateDTO, 'codigo_ciiu'> {
     actividad_economica: number
+    segundo_apellido: string
+    segundo_nombre: string
 }
 export type TercerosFormKesy = keyof TerceroForm
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -28,7 +30,9 @@ const CrearTercero = () => {
             "dv": "5",
             "estado": Boolean(data.estado),
             "primer_apellido": data.primer_apellido,
+            "segundo_apellido": data.segundo_apellido,
             "primer_nombre": data.primer_nombre,
+            "segundo_nombre": data.segundo_nombre,
             "razon_social": data.razon_social,
             "direccion": data.direccion,
             "telefono": data.telefono,
