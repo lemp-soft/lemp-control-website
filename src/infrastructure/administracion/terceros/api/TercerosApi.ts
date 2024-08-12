@@ -65,7 +65,7 @@ export class TercerosApi {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token') ?? ''
+                    AdminAuthControl: localStorage.getItem('token') ?? ''
                 },
                 body: JSON.stringify(tercero)
             })
