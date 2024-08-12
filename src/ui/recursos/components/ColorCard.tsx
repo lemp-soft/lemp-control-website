@@ -1,10 +1,9 @@
+import { useState } from "react"
 interface ColorCardProps {
     title: string
     description: string
     hexa: string
 }
-import { useState } from "react"
-
 const ColorCard = ({ description, hexa, title }: ColorCardProps) => {
     const [bgcolor, setBgcolor] = useState(hexa)
     return (
