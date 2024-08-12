@@ -43,23 +43,8 @@ export interface Tercero extends Omit<TerceroDTO, "creado_en" | "actualizado_en"
     nombre: string
     [key: string]: any;
 }
-/* 
-datos obligatorios
-    'nit' => 123456789,
-    'id_municipio' => 1,
-    'tipo' => 11,
-    'dv' => 1,
-    'primer_apellido' => 'apellido',
-    'primer_nombre' => 'nombre',
-    'razon_social' => 'razon social',
-    'direccion' => 'direccion',
-    'telefono' => 1234567,
-    'correo' => 'correo@correo',
-    'estado' => true,
-    'regimenes' => '49 - no responsable de IVA',
-    'responsabilidades' => 'R-99-PN No aplica, otros',
-    'actividad_economica' => 10
-*/
-export type TerceroCreateDTO = Omit<TerceroDTO, "error" | "imagen" | "clave_acceso" | "clave_firma" | "area" | "cargo" | "creado_en" | "actualizado_en" | "eliminado_en">;
+export type TerceroCreateDTO = Omit<TerceroDTO, "imagen" | "clave_acceso" | "clave_firma" | "area" | "cargo" | "creado_en" | "actualizado_en" | "eliminado_en" | "codigo_ciiu"> & {
+    actividad_economica: number
+}
 // todos los campos son opcionales
 export type TerceroUpdateDTO = Partial<TerceroDTO>;
