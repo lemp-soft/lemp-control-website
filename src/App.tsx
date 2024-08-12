@@ -7,11 +7,11 @@ import Empresas from './pages/Administracion/Empresas';
 import Iniciar from './pages/sesiones/Iniciar';
 import AdministracionPage from './pages/Administracion';
 import UsuariosPage from './pages/Administracion/Usuarios';
-import TerceroIdPage from './pages/Administracion/Terceros/TerceroId';
-import EditarTerceroPage from './pages/Administracion/Terceros/EditarTercero';
 import V2TercerosPage from './ui/administracion/terceros/pages/TercerosPage';
 import V2CrearTercerosPage from './ui/administracion/terceros/pages/CrearTercero';
 import TerceroPage from './ui/administracion/terceros/pages/TerceroPage';
+import EditarTerceroPage from '@ui/administracion/terceros/pages/TerceroPage';
+
 const queryClient = new QueryClient();
 const App: React.FC = () => {
   return (
@@ -20,8 +20,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path='/administracion/terceros' element={<V2TercerosPage />} />
         <Route path="/administracion" element={<AdministracionPage />} />
-        <Route path="/administracion/terceros/:nit" element={<TerceroIdPage />} />
-        <Route path="/v2/administracion/terceros/:nit" element={<TerceroPage/>} />
+        <Route path="/administracion/terceros/:nit" element={<TerceroPage/>} />
         <Route path="/administracion/terceros/:nit/editar" element={<EditarTerceroPage />} />
         <Route path="/administracion/terceros/crear" element={<V2CrearTercerosPage />} />
         <Route path="/administracion/empresas" element={<Empresas />} />

@@ -2,14 +2,28 @@ import { useParams } from "react-router-dom"
 import { useTercero } from "../hooks/useTercero"
 import MainLayout from "../../../../layouts/MainLayout"
 import ContainerLayout from "../../../../layouts/ContainerLayout"
+import Acordeon from "@ui/common/components/Acordeon/Acordeon"
 import { Link } from "react-router-dom"
 
 const TerceroPage = () => {
     const { nit } = useParams()
-    const { tercero, empresa } = useTercero(Number(nit))
-    const { data: dataTercero, isError: ErrorTercero, isLoading: LoaddingTercero } = tercero
-    const { dataEmpresa } = empresa
-    if (LoaddingTercero) {
+    const { dataTercero, ErrorTercero, LoadingTercero, dataEmpresa } = useTercero(Number(nit))
+    const items = dataEmpresa?.map((empresa) => ({
+        head: empresa.codigo.toString(),
+        body: [
+            `Nit : ${empresa.nit_tercero}`,
+            `Estado : ${empresa.estado_empresa ? 'Activo' : 'Inactivo'}`,
+            `Estado Factura Electronica : ${empresa.estado_factura_electronica ? 'Activo' : 'Inactivo'}`,
+            `Manejo Decimal : ${empresa.manejo_decimal ? 'Activo' : 'Inactivo'}`,
+            `Dian Token : ${empresa.dian_token}`,
+            `Dian Usuario Api : ${empresa.dian_usuario_api}`,
+            `Dian Contrasena Api : ${empresa.dian_contrasena_api}`,
+            `Dian Codigo Compania : ${empresa.dian_codigo_compania}`,
+            `Dian Creacion Token : ${String(empresa.dian_creacion_token)}`,
+            `Dian Codigo de Operacion : ${empresa.dian_codigo_de_operacion}`
+        ]
+    }))
+    if (LoadingTercero) {
         return (
             <MainLayout>
                 <main>
@@ -70,34 +84,7 @@ const TerceroPage = () => {
                         </section>
                         <section className="mt-4 w-1/2">
                             <h2 className="text-lg font-semibold mb-4">Empresas asociadas al Tercero</h2>
-                            <ul>
-                                {
-                                    dataEmpresa?.length === 0 && (
-                                        <h1 className="text-4xl text-yellow-500 font-semibold">No hay empresas</h1>
-                                    )
-                                }
-                                {
-                                    dataEmpresa?.length && dataEmpresa?.length > 0 && (
-                                        dataEmpresa?.map((empresa) => (
-                                            <li key={empresa.codigo}>
-                                                <h2>{empresa.codigo}</h2>
-                                                <ul>
-                                                    <li>Nit : {empresa.nit_tercero}</li>
-                                                    <li>Estado : {empresa.estado_empresa ? 'Activo' : 'Inactivo'}</li>
-                                                    <li>Estado Factura Electronica : {empresa.estado_factura_electronica ? 'Activo' : 'Inactivo'}</li>
-                                                    <li>Manejo Decimal : {empresa.manejo_decimal ? 'Activo' : 'Inactivo'}</li>
-                                                    <li>Dian Token : {empresa.dian_token}</li>
-                                                    <li>Dian Usuario Api : {empresa.dian_usuario_api}</li>
-                                                    <li>Dian Contrasena Api : {empresa.dian_contrasena_api}</li>
-                                                    <li>Dian Codigo Compania : {empresa.dian_codigo_compania}</li>
-                                                    <li>Dian Creacion Token : {String(empresa.dian_creacion_token)}</li>
-                                                    <li>Dian Codigo de Operacion : {empresa.dian_codigo_de_operacion}</li>
-                                                </ul>
-                                            </li>
-                                        ))
-                                    )
-                                }
-                            </ul>
+                            <Acordeon items={items ?? []}/>
                         </section>
                     </div>
                 </main>

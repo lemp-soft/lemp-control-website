@@ -27,16 +27,16 @@ interface GetTerceroTiposFetchResponse {
     message: string
 }
 export class TercerosApi {
-    async getTercero(codigo: number): Promise<TerceroApiResult> {
+    async getTercero(codigo: number): Promise<Tercero> {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/v1/terceros/' + codigo, {
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/terceros/${codigo}`, {
                 headers: {
-                    Authorization: localStorage.getItem('token') ?? ''
+                    "AdminAuthControl": localStorage.getItem('token') ?? ''
                 }
             })
             const data = await response.json() as GetTerceroFetchResponse
-            console.log(data)
-            return data.data
+            const dataAdapted = TerceroApiAdapter.ApiToEntity(data.data)
+            return dataAdapted
         } catch (error) {
             throw new Error('Error al obtener el tercero')
         }
@@ -52,7 +52,6 @@ export class TercerosApi {
                 }
             })
             const data = await response.json() as GetTercerosFetchResponse
-            console.log(data)
             const dataAdapted = data.data.map(tercero => TerceroApiAdapter.ApiToEntity(tercero))
             return dataAdapted
         } catch (error) {

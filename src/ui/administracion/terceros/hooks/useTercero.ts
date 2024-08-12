@@ -3,7 +3,7 @@ import { TerceroRepository } from "../../../../infrastructure/administracion/ter
 import { EmpresaRepository } from "../../../../infrastructure/administracion/empresas/repositories/EmpresaRepository"
 export function useTercero(nit: number) {
     const terceroRepository = new TerceroRepository()
-    const { data, isLoading, isError } = useQuery({
+    const { data:dataTercero, isLoading:LoadingTercero, isError:ErrorTercero } = useQuery({
         queryKey: ['tercero', nit],
         queryFn: async () => {
             const response = await terceroRepository.getTercero(nit)
@@ -19,16 +19,6 @@ export function useTercero(nit: number) {
             return response
         }
     })
-    const empresa = {
-        dataEmpresa: dataEmpresa,
-        LoadingEmpresa,
-        ErrorEmpresa
-    }
-    const tercero = {
-        data: data?.data,
-        isLoading,
-        isError
-    }
 
-    return { tercero, empresa }
+    return { dataTercero, LoadingTercero, ErrorTercero, dataEmpresa, LoadingEmpresa, ErrorEmpresa }
 }
