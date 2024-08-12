@@ -34,17 +34,32 @@ export interface TerceroDTO {
 }
 // typo que extiende de Tercero pero modifica los campos que son opcionales cambia siguiendo las directrices de la api
 export interface TerceroApiResult extends Omit<TerceroDTO, "creado_en" | "actualizado_en" | "eliminado_en" | "tipo" | "id_municipio" | "codigo_ciiu"> {
-    tipo: TerceroTipo,
     municipio: MunicipioFundamentalData,
     ciiu: CiiuFundametalData
 }
 export interface Tercero extends Omit<TerceroDTO, "creado_en" | "actualizado_en" | "eliminado_en" | "tipo" | "id_municipio" | "codigo_ciiu" | "primer_apellido" | "segundo_apellido" | "primer_nombre" | "segundo_nombre"> {
-    tipo: string,
     municipio: string,
     actividad_economica: string
     nombre: string
     [key: string]: any;
 }
+/* 
+datos obligatorios
+    'nit' => 123456789,
+    'id_municipio' => 1,
+    'tipo' => 11,
+    'dv' => 1,
+    'primer_apellido' => 'apellido',
+    'primer_nombre' => 'nombre',
+    'razon_social' => 'razon social',
+    'direccion' => 'direccion',
+    'telefono' => 1234567,
+    'correo' => 'correo@correo',
+    'estado' => true,
+    'regimenes' => '49 - no responsable de IVA',
+    'responsabilidades' => 'R-99-PN No aplica, otros',
+    'actividad_economica' => 10
+*/
 export type TerceroCreateDTO = Omit<TerceroDTO, "error" | "imagen" | "clave_acceso" | "clave_firma" | "area" | "cargo" | "creado_en" | "actualizado_en" | "eliminado_en">;
 // todos los campos son opcionales
 export type TerceroUpdateDTO = Partial<TerceroDTO>;

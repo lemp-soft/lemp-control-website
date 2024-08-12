@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TerceroRepository } from "../../../../infrastructure/administracion/terceros/repositories/TerceroRepasitory"
 interface PropsUseTerceros {
     elementosPorPagina?: number,
@@ -14,5 +14,8 @@ export function useTerceros({ elementosPorPagina = 5 }: PropsUseTerceros) {
             return terceroRepository.getTerceros(elementosPorPagina, search, currentPage)
         }
     })
+    useEffect(() => {
+        console.log(data)
+    }, [data])
     return { data, isLoading, isError, setSearch, setCurrentPage }
 }

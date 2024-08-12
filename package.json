@@ -13,6 +13,7 @@
     "@tanstack/react-query": "^5.51.11",
     "@types/react-router-dom": "^5.3.3",
     "axios": "1.7.2",
+    "lemp-disyng": "0.0.1",
     "npm-hello-word-lemp": "^0.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

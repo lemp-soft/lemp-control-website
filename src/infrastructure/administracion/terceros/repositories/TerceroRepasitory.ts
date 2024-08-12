@@ -1,13 +1,13 @@
 import { Tercero, TerceroApiResult, TerceroCreateDTO, TerceroUpdateDTO } from "../../../../domain/administracion/terceros/entities/tercero";
 import { TerceroTipo } from "../../../../domain/administracion/terceros/entities/tercero_tipo";
-import { GetTercero, GetTerceros, CreateTercero, UpdateTercero, getTerceroTipos } from "../../../../domain/administracion/terceros/repositories/terceroRepository";
+import { TerceroRepository as TercerosRepo } from "../../../../domain/administracion/terceros/repositories/terceroRepository";
 import { TercerosApi } from "../api/TercerosApi";
-export class TerceroRepository implements GetTercero, GetTerceros, CreateTercero, UpdateTercero, getTerceroTipos {
+export class TerceroRepository implements TercerosRepo {
     private api: TercerosApi;
     constructor() {
         this.api = new TercerosApi();
     }
-    async getTercero(codigo: number): Promise<Tercero> {
+    async getTercero(codigo: number): Promise<TerceroApiResult> {
         return this.api.getTercero(codigo);
     }
     async getTerceros(elementosPorPagina?: number, search?: string, currentPage?: number): Promise<Tercero[]> {
