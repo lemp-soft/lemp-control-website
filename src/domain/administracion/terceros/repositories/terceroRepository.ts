@@ -7,4 +7,5 @@ export abstract class TerceroRepository {
     public abstract createTercero(tercero: TerceroCreateDTO): Promise<Tercero>;
     public abstract updateTercero(tercero: TerceroUpdateDTO): Promise<Tercero>;
     public abstract getTerceroTipos(): Promise<TerceroTipo[]>;
+    public abstract deleteTercero(codigo: number): Promise<void>;
 }
