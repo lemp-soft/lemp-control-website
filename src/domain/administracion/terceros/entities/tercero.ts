@@ -48,4 +48,6 @@ export type TerceroCreateDTO = Omit<TerceroDTO, "imagen" | "clave_acceso" | "cla
     actividad_economica: number
 }
 // todos los campos son opcionales
-export type TerceroUpdateDTO = Partial<TerceroDTO>;
+export type TerceroUpdateDTO = Partial<TerceroDTO> & {
+    actividad_economica?: number
+}

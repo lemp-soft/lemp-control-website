@@ -19,7 +19,8 @@ export class TerceroRepository implements TercerosRepo {
         return this.api.saveTercero(tercero);
     }
     async updateTercero(tercero: TerceroUpdateDTO): Promise<Tercero> {
-        return this.api.modifyTercero(tercero);
+        const terceroUpdated = await this.api.modifyTercero(tercero);
+        return TerceroApiAdapter.ApiToEntity(terceroUpdated);
     }
     async getTerceroTipos(): Promise<TerceroTipo[]> {
         return this.api.getTercerosTipos();

@@ -74,7 +74,7 @@ export class TercerosApi {
             throw new Error('Error al guardar el tercero')
         }
     }
-    async modifyTercero(tercero: TerceroUpdateDTO): Promise<Tercero> {
+    async modifyTercero(tercero: TerceroUpdateDTO): Promise<TerceroApiResult> {
         try {
             const response = await fetch('http://127.0.0.1:8000/api/v1/terceros', {
                 method: 'PUT',
@@ -85,8 +85,7 @@ export class TercerosApi {
                 body: JSON.stringify(tercero)
             })
             const data = await response.json() as UpdateTerceroFetchResponse
-            const dataAdapted = TerceroApiAdapter.ApiToEntity(data.data)
-            return dataAdapted
+            return data.data
         } catch (error) {
             throw new Error('Error al modificar el tercero')
         }
