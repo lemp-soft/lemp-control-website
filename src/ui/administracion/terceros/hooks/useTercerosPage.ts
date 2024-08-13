@@ -3,6 +3,7 @@ import { useTerceros } from "../hooks/useTerceros"
 import { PropsPaginationMainTable } from "../../../common/components/Paginations/PaginationMainTable"
 import { useNavigate } from "react-router-dom"
 import { useCheckboxTable } from "../../../../shared/state/checkTableStore"
+import { useDeleteTercero } from "./useDelteTercero"
 export function useTercerosPage() {
     // traer los datos de la api
     const navigate = useNavigate()
@@ -11,7 +12,7 @@ export function useTercerosPage() {
     })
 
     const { columns, setColumnsStore, compare } = useCheckboxTable("terceros")
-    
+    const { EliminarTercero, Loadding: DeleteTerceroLoading, error: DeleteTerceroError } = useDeleteTercero()
     const handdleEdit = (id: string) => {
         navigate(`/administracion/terceros/${id}`)
     }
@@ -20,6 +21,11 @@ export function useTercerosPage() {
     }
     const haddleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value)
+    }
+    const handdleDeleteTercero = (nit: string) => {
+        if (globalThis.confirm('¿Estas seguro de eliminar el tercero?')) {
+            EliminarTercero(Number(nit))
+        }
     }
     const pagination: PropsPaginationMainTable = {
         max_pages: 1,
@@ -38,8 +44,11 @@ export function useTercerosPage() {
         isLoading,
         handdleEdit,
         haddleSearch,
+        handdleDeleteTercero,
         pagination,
         columns,
-        setColumnsStore
+        setColumnsStore,
+        DeleteTerceroLoading,
+        DeleteTerceroError
     }
 }
