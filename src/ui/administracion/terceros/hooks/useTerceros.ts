@@ -14,8 +14,5 @@ export function useTerceros({ elementosPorPagina = 5 }: PropsUseTerceros) {
             return terceroRepository.getTerceros(elementosPorPagina, search, currentPage)
         }
     })
-    useEffect(() => {
-        console.log(data)
-    }, [data])
     return { data, isLoading, isError, setSearch, setCurrentPage }
 }

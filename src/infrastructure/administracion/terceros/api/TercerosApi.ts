@@ -17,7 +17,7 @@ interface SaveTerceroFetchResponse {
     message: string
 }
 interface UpdateTerceroFetchResponse {
-    data: TerceroApiResult
+    data: true
     status: string
     message: string
 }
@@ -74,13 +74,13 @@ export class TercerosApi {
             throw new Error('Error al guardar el tercero')
         }
     }
-    async modifyTercero(tercero: TerceroUpdateDTO): Promise<TerceroApiResult> {
+    async modifyTercero(tercero: TerceroUpdateDTO, nit: number): Promise<true> {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/v1/terceros', {
+            const response = await fetch('http://127.0.0.1:8000/api/v1/terceros/' + nit, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: localStorage.getItem('token') ?? ''
+                    AdminAuthControl: localStorage.getItem('token') ?? ''
                 },
                 body: JSON.stringify(tercero)
             })

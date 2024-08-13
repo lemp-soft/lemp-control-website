@@ -18,9 +18,6 @@ const CrearTercero = () => {
     const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
         console.log(data)
     }
-    useEffect(() => { 
-        console.log(watch())
-     }, [watch()])
     return (
         <MainLayout>
             <main>

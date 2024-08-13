@@ -7,20 +7,62 @@ import SelectInputResponsabilidades from "../components/SelectInputResponsabilid
 import SelectInputRegimanes from "../components/SelectInputRegimanes"
 import SelectInputActive from "../components/SelectInputActive"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react"
+import { useModifyTercero } from "../hooks/useModifyTercero"
 
 // import { useEffect } from "react"
 const EditarTerceroPage = () => {
     const { nit } = useParams()
+    const navigation = useNavigate()
     const { register, handleSubmit, setValue } = useForm<TerceroForm>()
+    const { Error, Loading, ModificarTercero } = useModifyTercero({ nit: parseInt(nit as string) })
     const [toggleRazonAndNobre, setToggleRazonAndNobre] = useState(false)
     const handdleToggle = () => {
         setToggleRazonAndNobre(state => !state)
+        if (!toggleRazonAndNobre) {
+            setValue("razon_social", "")
+        } else {
+            setValue("primer_apellido", "")
+            setValue("segundo_apellido", "")
+            setValue("primer_nombre", "")
+            setValue("segundo_nombre", "")
+        }
     }
     const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
-        console.log(data)
-    }
+
+        let objet: Partial<TerceroForm> = {};
+        if (toggleRazonAndNobre) {
+            const { primer_apellido, primer_nombre, segundo_nombre, segundo_apellido, estado, ...d } = data;
+            const keysData = Object.keys(d) as Array<keyof typeof d>;
+            keysData.forEach((key) => {
+                if(d[key] !== "") {
+                    (objet as any)[key] = d[key];
+                }
+            });
+            console.log(objet, "Razon_social")
+            ModificarTercero({
+                ...objet,
+                estado: typeof estado === "string" && estado === "true" ? true : false
+            })
+        } else {
+            const { razon_social,estado, ...d } = data;
+            const keysData = Object.keys(d) as Array<keyof typeof d>;
+            keysData.forEach((key) => {
+                if(d[key] !== "") {
+                    (objet as any)[key] = d[key];
+                }
+            });
+            console.log(objet, "Primer_nombre")
+            ModificarTercero({
+                ...objet,
+                estado: typeof estado === "string" && estado === "true" ? true : false
+            })
+        }
+    };
+    
+    
+    
     return (
         <MainLayout>
             <main>
@@ -38,32 +80,32 @@ const EditarTerceroPage = () => {
                             </div>
                             {
                                 toggleRazonAndNobre ? (
-                                    <InputBasic className="col-span-2" type="text" id="Razon_social" placeholder="Mag Donal" label="Razon social :" required register={register} registerName="razon_social" registerOptions={{ required: true }} />
+                                    <InputBasic className="col-span-2" type="text" id="Razon_social" placeholder="Mag Donal" label="Razon social :" register={register} registerName="razon_social" registerOptions={{ required: false }} />
                                 ) : ""
                             }
                             {
                                 !toggleRazonAndNobre ? (
                                     <>
-                                        <InputBasic type="text" id="Primer_apellido" placeholder="Juan" label="Primer Apellido :" required register={register} registerName="primer_apellido" registerOptions={{ required: true }} />
+                                        <InputBasic type="text" id="Primer_apellido" placeholder="Juan" label="Primer Apellido :" register={register} registerName="primer_apellido" registerOptions={{ required: false }} />
                                         <InputBasic type="text" id="Segundo_apellido" placeholder="Felipe" label="Segundo Apellido :" register={register} registerName="segundo_apellido" registerOptions={{ required: false }} />
-                                        <InputBasic type="text" id="Primer_nombre" placeholder="Valbuena" label="Primer Nombre :" required register={register} registerName="primer_nombre" registerOptions={{ required: true }} />
+                                        <InputBasic type="text" id="Primer_nombre" placeholder="Valbuena" label="Primer Nombre :" register={register} registerName="primer_nombre" registerOptions={{ required: false }} />
                                         <InputBasic type="text" id="Segundo_nombre" placeholder="Valderrama" label="Segundo Nombre :" register={register} registerName="segundo_nombre" registerOptions={{ required: false }} />
                                     </>
                                 ) : ""
                             }
-                            <InputBasic className="col-span-2" type="text" id="Direccion" placeholder="Suba Bilbao 126 # 43-54" label="Direccion :" required register={register} registerName="direccion" registerOptions={{ required: true }} />
-                            <InputBasic type="number" id="Telefono_1" placeholder="##########" label="Telefono 1 :" required register={register} registerName="telefono" registerOptions={{ required: true }} />
+                            <InputBasic className="col-span-2" type="text" id="Direccion" placeholder="Suba Bilbao 126 # 43-54" label="Direccion :" register={register} registerName="direccion" registerOptions={{ required: false }} />
+                            <InputBasic type="number" id="Telefono_1" placeholder="##########" label="Telefono 1 :" register={register} registerName="telefono" registerOptions={{ required: false }} />
                             <InputBasic type="number" id="Telefono_2" placeholder="##########" label="Telefono 2 :" register={register} registerName="telefono_movil" registerOptions={{ required: false }} />
                             <SearchInputUbicacion className="col-span-2" label="Ubicacion - Departamento/Municipio :" setValue={setValue} />
-                            <InputBasic className={toggleRazonAndNobre ? 'col-span-4' : 'col-span-2'} type="email" id="Correo" placeholder="ejemplecoreo@gmail.com" label="Correo electronico :" required register={register} registerName="correo" registerOptions={{ required: true }} />
+                            <InputBasic className={toggleRazonAndNobre ? 'col-span-4' : 'col-span-2'} type="email" id="Correo" placeholder="ejemplecoreo@gmail.com" label="Correo electronico :" register={register} registerName="correo" registerOptions={{ required: false }} />
                             <SearchInputActividadEconomica label="Actividad economica :" className="col-span-4" setValue={setValue} />
-                            <SelectInputResponsabilidades register={register} registerName="responsabilidades" registerOptions={{ required: true }} />
-                            <SelectInputRegimanes register={register} registerName="regimenes" registerOptions={{ required: true }} />
-                            <SelectInputActive register={register} registerName="estado" registerOptions={{ required: true }} />
+                            <SelectInputResponsabilidades register={register} registerName="responsabilidades" registerOptions={{ required: false }} />
+                            <SelectInputRegimanes register={register} registerName="regimenes" registerOptions={{ required: false }} />
+                            <SelectInputActive register={register} registerName="estado" registerOptions={{ required: false }} />
                             <div>
                                 <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                                     <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                        Crear Tercero
+                                        Modificar Tercero
                                     </span>
                                 </button>
                             </div>
