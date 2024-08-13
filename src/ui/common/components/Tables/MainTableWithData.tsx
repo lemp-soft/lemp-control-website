@@ -6,8 +6,9 @@ interface MainTableWithDataProps<T extends Record<string, any>> {
     columns: CheckTable[]
     handdleEdit: (id: string) => void
     haddeDelete: (id: string) => void
+    handdleClickOnRow?: (id: string) => void
 }
-export function MainTableWithData<T extends Record<string, any>>({ pagination, data, columns, haddeDelete, handdleEdit }: MainTableWithDataProps<T>) {
+export function MainTableWithData<T extends Record<string, any>>({ pagination, data, columns, haddeDelete, handdleEdit, handdleClickOnRow }: MainTableWithDataProps<T>) {
     return <>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -26,7 +27,7 @@ export function MainTableWithData<T extends Record<string, any>>({ pagination, d
                         data.map((row, index) => (
                             <tr key={index} className="bg-white dark:bg-gray-800">
                                 {
-                                    columns.map((column, index) => column.active && <td key={index} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-400 w-full">{row[column.name]}</td>)
+                                    columns.map((column, index) => column.active && <td key={index} className={`px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-400 w-full ${handdleClickOnRow ? 'cursor-pointer' : ''}`} onClick={() => handdleClickOnRow && handdleClickOnRow(row.idTable)} title={`${row[column.name]}`}>{row[column.name]}</td>)
                                 }
                                 <td>
                                     <div className="flex justify-center items-center gap-2">

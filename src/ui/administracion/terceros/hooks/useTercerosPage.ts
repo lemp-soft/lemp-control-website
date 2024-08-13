@@ -14,6 +14,9 @@ export function useTercerosPage() {
     const { columns, setColumnsStore, compare } = useCheckboxTable("terceros")
     const { EliminarTercero, Loadding: DeleteTerceroLoading, error: DeleteTerceroError } = useDeleteTercero()
     const handdleEdit = (id: string) => {
+        navigate(`/administracion/terceros/${id}/editar`)
+    }
+    const handdleClickOnRow = (id: string) => {
         navigate(`/administracion/terceros/${id}`)
     }
     const haddlePage = (page: number) => {
@@ -45,6 +48,7 @@ export function useTercerosPage() {
         handdleEdit,
         haddleSearch,
         handdleDeleteTercero,
+        handdleClickOnRow,
         pagination,
         columns,
         setColumnsStore,

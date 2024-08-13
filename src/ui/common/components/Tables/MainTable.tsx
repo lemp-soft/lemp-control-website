@@ -12,10 +12,11 @@ export interface MainTableProps<T extends { idTable: string }> {
     name: string
     haddleEdit: (id: string) => void
     haddeDelete: (id: string) => void
+    handdleClickOnRow?: (id: string) => void
     pagination: PropsPaginationMainTable
     columns: CheckTable[]
 }
-const MainTable = <T extends { idTable: string }>({ data, error, loading, haddleEdit, haddeDelete, pagination, columns }: MainTableProps<T>) => {
+const MainTable = <T extends { idTable: string }>({ data, error, loading, haddleEdit, haddeDelete, handdleClickOnRow, pagination, columns }: MainTableProps<T>) => {
     if (loading) {
         return <MainTableSkeleton />
     }
@@ -23,7 +24,7 @@ const MainTable = <T extends { idTable: string }>({ data, error, loading, haddle
         return <MainTableError />
     }
     if (data && data.length) {
-        return <MainTableWithData data={data} pagination={pagination} columns={columns} handdleEdit={haddleEdit} haddeDelete={haddeDelete} />
+        return <MainTableWithData data={data} pagination={pagination} columns={columns} handdleEdit={haddleEdit} haddeDelete={haddeDelete} handdleClickOnRow={handdleClickOnRow} />
     }
     if (data && !data.length) {
         return <MainTableNoData />
