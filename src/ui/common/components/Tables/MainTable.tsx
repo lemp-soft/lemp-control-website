@@ -1,4 +1,3 @@
-import { Tercero } from "../../../../domain/administracion/terceros/entities/tercero"
 import { CheckTable } from "../../../../shared/types/check_table"
 import { PropsPaginationMainTable } from "../Paginations/PaginationMainTable"
 import MainTableError from "./MainTableError"
