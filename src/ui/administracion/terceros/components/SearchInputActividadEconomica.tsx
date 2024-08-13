@@ -1,7 +1,7 @@
 import { UseFormSetValue } from "react-hook-form";
 import SearchInput from "../../../common/components/Searchs/SearchInput";
 import { useSearchInputActividadEconomica } from "../hooks/useSearchInputActividadEconomica";
-import { TerceroForm } from "../pages/CrearTercero";
+import { TerceroForm } from "../components/Imputs/InputForm";
 interface Props {
     setValue: UseFormSetValue<TerceroForm>
     className?: string;

@@ -15,7 +15,6 @@ export function useTercero(nit: number) {
         queryKey: ['tercero', 'empresa', nit],
         queryFn: async () => {
             const response = await empresaRepository.getEmpresaPorNitDeTercero(nit)
-            console.log(response)
             return response
         }
     })

@@ -36,6 +36,7 @@ export interface TerceroDTO {
 export interface TerceroApiResult extends Omit<TerceroDTO, "creado_en" | "actualizado_en" | "eliminado_en" | "tipo" | "id_municipio" | "codigo_ciiu"> {
     municipio: MunicipioFundamentalData,
     ciiu: CiiuFundametalData
+    tipo: TerceroTipo
 }
 export interface Tercero extends Omit<TerceroDTO, "creado_en" | "actualizado_en" | "eliminado_en" | "tipo" | "id_municipio" | "codigo_ciiu" | "primer_apellido" | "segundo_apellido" | "primer_nombre" | "segundo_nombre"> {
     municipio: string,

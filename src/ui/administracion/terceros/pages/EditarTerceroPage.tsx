@@ -7,36 +7,19 @@ import SelectInputResponsabilidades from "../components/SelectInputResponsabilid
 import SelectInputRegimanes from "../components/SelectInputRegimanes"
 import SelectInputActive from "../components/SelectInputActive"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useCrearTercero } from "../hooks"
-import { useEffect } from "react"
-import SelectInputTipoTerceros from "../components/SelectInputTipoTerceros"
+import { useParams } from "react-router-dom"
+import { useState } from "react"
+
 // import { useEffect } from "react"
 const EditarTerceroPage = () => {
-    const { crearTercero } = useCrearTercero()
-    const { register, handleSubmit, setValue, watch } = useForm<TerceroForm>()
-    useEffect(() => {
-        console.log(watch())
-    }, [watch()])
+    const { nit } = useParams()
+    const { register, handleSubmit, setValue } = useForm<TerceroForm>()
+    const [toggleRazonAndNobre, setToggleRazonAndNobre] = useState(false)
+    const handdleToggle = () => {
+        setToggleRazonAndNobre(state => !state)
+    }
     const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
         console.log(data)
-        crearTercero({
-            "nit": data.nit,
-            "id_municipio": data.id_municipio,
-            "tipo": Number(data.tipo.toString().split(" - ")[0]),
-            "dv": "5",
-            "estado": Boolean(data.estado),
-            "primer_apellido": data.primer_apellido,
-            "segundo_apellido": data.segundo_apellido,
-            "primer_nombre": data.primer_nombre,
-            "segundo_nombre": data.segundo_nombre,
-            "razon_social": data.razon_social,
-            "direccion": data.direccion,
-            "telefono": data.telefono,
-            "correo": data.correo,
-            "regimenes": data.regimenes,
-            "responsabilidades": data.responsabilidades,
-            "actividad_economica": data.actividad_economica,
-        })
     }
     return (
         <MainLayout>
@@ -45,18 +28,34 @@ const EditarTerceroPage = () => {
                     <h1 className="text-2xl font-bold my-4">Crear un Tercero</h1>
                     <div className="w-full h-full p-4 bg-white rounded-2xl">
                         <form className="mt-8 grid gap-6 mb-6 md:grid-cols-4" onSubmit={handleSubmit(onSubmit)}>
-                            <SelectInputTipoTerceros register={register} registerName="tipo" registerOptions={{ required: true }} />
-                            <InputBasic type="number" id="first_name" placeholder="#########" required register={register} label="Numero de identificacion :" registerName="nit" registerOptions={{ required: true }} />
-                            <InputBasic className="col-span-2" type="text" id="Razon_social" placeholder="#########" label="Razon social :" required register={register} registerName="razon_social" registerOptions={{ required: true }} />
-                            <InputBasic type="text" id="Primer_apellido" placeholder="#########" label="Primer Apellido :" required register={register} registerName="primer_apellido" registerOptions={{ required: true }} />
-                            <InputBasic type="text" id="Segundo_apellido" placeholder="#########" label="Segundo Apellido :" register={register} registerName="segundo_apellido" registerOptions={{ required: false }} />
-                            <InputBasic type="text" id="Primer_nombre" placeholder="#########" label="Primer Nombre :" required register={register} registerName="primer_nombre" registerOptions={{ required: true }} />
-                            <InputBasic type="text" id="Segundo_nombre" placeholder="#########" label="Segundo Nombre :" register={register} registerName="segundo_nombre" registerOptions={{ required: false }} />
-                            <InputBasic className="col-span-2" type="text" id="Direccion" placeholder="#########" label="Direccion :" required register={register} registerName="direccion" registerOptions={{ required: true }} />
+                            <div className="col-span-4">
+                                <label className="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" value={`${toggleRazonAndNobre}`} className="sr-only peer" onClick={handdleToggle} />
+                                    <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                    <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Razon o Nobre</span>
+                                </label>
+
+                            </div>
+                            {
+                                toggleRazonAndNobre ? (
+                                    <InputBasic className="col-span-2" type="text" id="Razon_social" placeholder="Mag Donal" label="Razon social :" required register={register} registerName="razon_social" registerOptions={{ required: true }} />
+                                ) : ""
+                            }
+                            {
+                                !toggleRazonAndNobre ? (
+                                    <>
+                                        <InputBasic type="text" id="Primer_apellido" placeholder="Juan" label="Primer Apellido :" required register={register} registerName="primer_apellido" registerOptions={{ required: true }} />
+                                        <InputBasic type="text" id="Segundo_apellido" placeholder="Felipe" label="Segundo Apellido :" register={register} registerName="segundo_apellido" registerOptions={{ required: false }} />
+                                        <InputBasic type="text" id="Primer_nombre" placeholder="Valbuena" label="Primer Nombre :" required register={register} registerName="primer_nombre" registerOptions={{ required: true }} />
+                                        <InputBasic type="text" id="Segundo_nombre" placeholder="Valderrama" label="Segundo Nombre :" register={register} registerName="segundo_nombre" registerOptions={{ required: false }} />
+                                    </>
+                                ) : ""
+                            }
+                            <InputBasic className="col-span-2" type="text" id="Direccion" placeholder="Suba Bilbao 126 # 43-54" label="Direccion :" required register={register} registerName="direccion" registerOptions={{ required: true }} />
                             <InputBasic type="number" id="Telefono_1" placeholder="##########" label="Telefono 1 :" required register={register} registerName="telefono" registerOptions={{ required: true }} />
                             <InputBasic type="number" id="Telefono_2" placeholder="##########" label="Telefono 2 :" register={register} registerName="telefono_movil" registerOptions={{ required: false }} />
                             <SearchInputUbicacion className="col-span-2" label="Ubicacion - Departamento/Municipio :" setValue={setValue} />
-                            <InputBasic className="col-span-2" type="email" id="Correo" placeholder="ejemplecoreo@gmail.com" label="Correo electronico :" required register={register} registerName="correo" registerOptions={{ required: true }} />
+                            <InputBasic className={toggleRazonAndNobre ? 'col-span-4' : 'col-span-2'} type="email" id="Correo" placeholder="ejemplecoreo@gmail.com" label="Correo electronico :" required register={register} registerName="correo" registerOptions={{ required: true }} />
                             <SearchInputActividadEconomica label="Actividad economica :" className="col-span-4" setValue={setValue} />
                             <SelectInputResponsabilidades register={register} registerName="responsabilidades" registerOptions={{ required: true }} />
                             <SelectInputRegimanes register={register} registerName="regimenes" registerOptions={{ required: true }} />
