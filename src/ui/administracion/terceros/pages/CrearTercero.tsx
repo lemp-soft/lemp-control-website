@@ -2,13 +2,7 @@ import ContainerLayout from "../../../common/layouts/ContainerLayout"
 import MainLayout from "../../../common/layouts/MainLayout"
 import SearchInputActividadEconomica from "../components/SearchInputActividadEconomica"
 import SearchInputUbicacion from "../components/SearchInputUbicacion"
-import InputBasic from "../../../common/components/Inputs/InputBasic"
-export interface TerceroForm extends Omit<TerceroCreateDTO, 'codigo_ciiu'> {
-    actividad_economica: number
-    segundo_apellido: string
-    segundo_nombre: string
-}
-export type TercerosFormKesy = keyof TerceroForm
+import InputBasic from "@common/components/Inputs/InputBasic"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { TerceroCreateDTO } from "../../../../domain/administracion/terceros/entities/tercero"
 import { useCrearTercero } from "../hooks"
@@ -17,12 +11,17 @@ import SelectInputResponsabilidades from "../components/SelectInputResponsabilid
 import SelectInputRegimanes from "../components/SelectInputRegimanes"
 import SelectInputActive from "../components/SelectInputActive"
 import { useEffect } from "react"
+export interface TerceroForm extends Omit<TerceroCreateDTO, 'codigo_ciiu'> {
+    actividad_economica: number
+    segundo_apellido: string
+    segundo_nombre: string
+}
+export type TercerosFormKesy = keyof TerceroForm
 // import { useEffect } from "react"
 const CrearTercero = () => {
     const { crearTercero } = useCrearTercero()
-    const { register, handleSubmit, setValue,watch } = useForm<TerceroForm>()
-    const onSubmit:SubmitHandler<TerceroForm> = (data: TerceroForm) => {
-        console.log(data)
+    const { register, handleSubmit, setValue, watch } = useForm<TerceroForm>()
+    const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
         crearTercero({
             "nit": data.nit,
             "id_municipio": data.id_municipio,
@@ -69,7 +68,11 @@ const CrearTercero = () => {
                             <SelectInputRegimanes register={register} registerName="regimenes" registerOptions={{ required: true }} />
                             <SelectInputActive register={register} registerName="estado" registerOptions={{ required: true }} />
                             <div>
-                                <input type="submit" value="Crear Tercero" className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800" />
+                                <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                        Crear Tercero
+                                    </span>
+                                </button>
                             </div>
                         </form>
                     </div>

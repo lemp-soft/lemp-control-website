@@ -1,4 +1,4 @@
-import { TerceroApiResult, TerceroCreateDTO, TerceroUpdateDTO,Tercero } from "../../../../domain/administracion/terceros/entities/tercero";
+import { TerceroApiResult, TerceroCreateDTO, TerceroUpdateDTO, Tercero } from "../../../../domain/administracion/terceros/entities/tercero";
 import { TerceroTipo } from "../../../../domain/administracion/terceros/entities/tercero_tipo";
 import { TerceroApiAdapter } from "../adapters/TerceroApiadapter";
 interface GetTercerosFetchResponse {
@@ -16,7 +16,7 @@ interface SaveTerceroFetchResponse {
     status: string
     message: string
 }
-interface  UpdateTerceroFetchResponse {
+interface UpdateTerceroFetchResponse {
     data: TerceroApiResult
     status: string
     message: string
@@ -99,6 +99,18 @@ export class TercerosApi {
             return data.data
         } catch (error) {
             throw new Error('Error al obtener los tipos de terceros')
+        }
+    }
+    async deleteTercero(codigo: number): Promise<void> {
+        try {
+            await fetch(`http://127.0.0.1:8000/api/v1/terceros/${codigo}`, {
+                method: 'DELETE',
+                headers: {
+                    AdminAuthControl: localStorage.getItem('token') ?? ''
+                }
+            })
+        } catch (error) {
+            throw new Error('Error al eliminar el tercero')
         }
     }
 

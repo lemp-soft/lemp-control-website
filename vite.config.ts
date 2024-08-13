@@ -7,7 +7,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@src': path.resolve(__dirname, 'src'),
-      '@ui': path.resolve(__dirname, 'src/ui')
+      '@ui': path.resolve(__dirname, 'src/ui'),
+      '@domain': path.resolve(__dirname, 'src/domain'),
+      '@infra': path.resolve(__dirname, 'src/infrastructure'),
+      '@common': path.resolve(__dirname, 'src/ui/common'),
     },
   },
 })

@@ -1,7 +1,7 @@
-import ContainerLayout from "@ui/common/layouts/ContainerLayout"
-import MainLayout from "@ui/common/layouts/MainLayout"
-import MainTable from "../../../common/components/Tables/MainTable"
-import MainTableHeader from "../../../common/components/Tables/MainTableHeader"
+import ContainerLayout from "@common/layouts/ContainerLayout"
+import MainLayout from "@common/layouts/MainLayout"
+import MainTable from "@common/components/Tables/MainTable"
+import MainTableHeader from "@common/components/Tables/MainTableHeader"
 import { useTercerosPage } from "../hooks/useTercerosPage"
 const TercerosPage = () => {
     const { columns, data, isError, isLoading, pagination, setColumnsStore, haddleSearch, handdleEdit } = useTercerosPage()

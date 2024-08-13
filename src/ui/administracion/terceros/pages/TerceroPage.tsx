@@ -1,12 +1,14 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useTercero } from "../hooks/useTercero"
-import MainLayout from "../../../../layouts/MainLayout"
-import ContainerLayout from "../../../../layouts/ContainerLayout"
+import MainLayout from "@ui/common/layouts/MainLayout"
+import ContainerLayout from "@ui/common/layouts/ContainerLayout"
 import Acordeon from "@ui/common/components/Acordeon/Acordeon"
 import { Link } from "react-router-dom"
+import { TerceroRepository } from "@infra/administracion/terceros/repositories/TerceroRepasitory"
 
 const TerceroPage = () => {
     const { nit } = useParams()
+    const navigate = useNavigate()
     const { dataTercero, ErrorTercero, LoadingTercero, dataEmpresa } = useTercero(Number(nit))
     const items = dataEmpresa?.map((empresa) => ({
         head: empresa.codigo.toString(),
@@ -33,6 +35,13 @@ const TerceroPage = () => {
                 </main>
             </MainLayout>
         )
+    }
+    const handdleDeleteTercero = () => {
+        const terceroRepository = new TerceroRepository()
+        if(globalThis.confirm('¿Estas seguro de eliminar el tercero?')) {
+            terceroRepository.deleteTercero(Number(nit))
+            navigate('/administracion/terceros')
+        }
     }
     if (ErrorTercero) {
         return (
@@ -81,10 +90,15 @@ const TerceroPage = () => {
                                     Editar Terceros
                                 </span>
                             </Link>
+                            <button onClick={handdleDeleteTercero} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                    Eliminar Tercero
+                                </span>
+                            </button>
                         </section>
                         <section className="mt-4 w-1/2">
                             <h2 className="text-lg font-semibold mb-4">Empresas asociadas al Tercero</h2>
-                            <Acordeon items={items ?? []}/>
+                            <Acordeon items={items ?? []} />
                         </section>
                     </div>
                 </main>

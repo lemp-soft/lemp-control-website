@@ -22,4 +22,7 @@ export class TerceroRepository implements TercerosRepo {
     async getTerceroTipos(): Promise<TerceroTipo[]> {
         return this.api.getTercerosTipos();
     }
+    public deleteTercero(codigo: number): Promise<void> {
+        return this.api.deleteTercero(codigo);
+    }
 }
