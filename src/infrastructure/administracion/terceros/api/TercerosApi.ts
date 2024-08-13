@@ -27,7 +27,7 @@ interface GetTerceroTiposFetchResponse {
     message: string
 }
 export class TercerosApi {
-    async getTercero(codigo: number): Promise<Tercero> {
+    async getTercero(codigo: number): Promise<TerceroApiResult> {
         try {
             const response = await fetch(`http://127.0.0.1:8000/api/v1/terceros/${codigo}`, {
                 headers: {
@@ -35,8 +35,7 @@ export class TercerosApi {
                 }
             })
             const data = await response.json() as GetTerceroFetchResponse
-            const dataAdapted = TerceroApiAdapter.ApiToEntity(data.data)
-            return dataAdapted
+            return data.data
         } catch (error) {
             throw new Error('Error al obtener el tercero')
         }
