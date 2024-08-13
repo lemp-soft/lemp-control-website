@@ -20,7 +20,7 @@ export type TercerosFormKesy = keyof TerceroForm
 // import { useEffect } from "react"
 const CrearTercero = () => {
     const { crearTercero } = useCrearTercero()
-    const { register, handleSubmit, setValue, watch } = useForm<TerceroForm>()
+    const { register, handleSubmit, setValue } = useForm<TerceroForm>()
     const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
         crearTercero({
             "nit": data.nit,
@@ -41,9 +41,6 @@ const CrearTercero = () => {
             "actividad_economica": data.actividad_economica,
         })
     }
-    useEffect(() => {
-        console.log(watch())
-    }, [watch()])
     return (
         <MainLayout>
             <main>
