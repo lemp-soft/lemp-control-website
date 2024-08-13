@@ -7,7 +7,7 @@ import AdministracionPage from '@ui/administracion/pages/AdministracionPage';
 import V2TercerosPage from '@ui/administracion/terceros/pages/TercerosPage';
 import V2CrearTercerosPage from '@ui/administracion/terceros/pages/CrearTercero';
 import TerceroPage from '@ui/administracion/terceros/pages/TerceroPage';
-import EditarTerceroPage from '@ui/administracion/terceros/pages/TerceroPage';
+import EditarTerceroPage from '@ui/administracion/terceros/pages/EditarTerceroPage';
 
 const queryClient = new QueryClient();
 const App: React.FC = () => {
