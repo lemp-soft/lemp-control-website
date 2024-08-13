@@ -9,14 +9,43 @@ import SelectInputActive from "../components/SelectInputActive"
 import { SubmitHandler, useForm } from "react-hook-form"
 import SelectInputTipoTerceros from "../components/SelectInputTipoTerceros"
 import { useEffect, useState } from "react"
+import { useCrearTercero } from "../hooks"
 const CrearTercero = () => {
     const { register, handleSubmit, setValue, watch } = useForm<TerceroForm>()
+    const { Error, crearTercero, isPending } = useCrearTercero()
     const [toggleRazonAndNobre, setToggleRazonAndNobre] = useState(false)
     const handdleToggle = () => {
         setToggleRazonAndNobre(state => !state)
     }
     const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
-        console.log(data)
+        let objet: Partial<TerceroForm> = {};
+        if (toggleRazonAndNobre) {
+            const { primer_apellido, primer_nombre, segundo_nombre, segundo_apellido, estado, ...d } = data;
+            const keysData = Object.keys(d) as Array<keyof typeof d>;
+            keysData.forEach((key) => {
+                if (d[key] !== "") {
+                    (objet as any)[key] = d[key];
+                }
+            });
+            console.log(objet, "Razon_social")
+            crearTercero({
+                ...objet,
+                estado: typeof estado === "string" && estado === "true" ? true : false
+            })
+        } else {
+            const { razon_social, estado, ...d } = data;
+            const keysData = Object.keys(d) as Array<keyof typeof d>;
+            keysData.forEach((key) => {
+                if (d[key] !== "") {
+                    (objet as any)[key] = d[key];
+                }
+            });
+            console.log(objet, "Primer_nombre")
+            crearTercero({
+                ...objet,
+                estado: typeof estado === "string" && estado === "true" ? true : false
+            })
+        }
     }
     return (
         <MainLayout>
@@ -51,6 +80,7 @@ const CrearTercero = () => {
                             }
                             <InputBasic type="number" id="Telefono_1" placeholder="##########" label="Telefono 1 :" required register={register} registerName="telefono" registerOptions={{ required: true }} />
                             <InputBasic type="number" id="Telefono_2" placeholder="##########" label="Telefono 2 :" register={register} registerName="telefono_movil" registerOptions={{ required: false }} />
+                            <InputBasic className="col-span-2" type="text" id="Direccion" placeholder="Suba Bilbao 126 # 43-54" label="Direccion :" register={register} registerName="direccion" registerOptions={{ required: true }} />
                             <SearchInputUbicacion className="col-span-2" label="Ubicacion - Departamento/Municipio :" setValue={setValue} />
                             <InputBasic className="col-span-2" type="email" id="Correo" placeholder="ejemplecoreo@gmail.com" label="Correo electronico :" required register={register} registerName="correo" registerOptions={{ required: true }} />
                             <SearchInputActividadEconomica label="Actividad economica :" className={toggleRazonAndNobre ? 'col-span-2' : 'col-span-4'} setValue={setValue} />

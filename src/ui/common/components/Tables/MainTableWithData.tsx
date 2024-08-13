@@ -43,7 +43,7 @@ export function MainTableWithData<T extends Record<string, any>>({ pagination, d
                         data.length !== 10 && Array.from({ length: 10 - data.length + 1 }, (_, i) => i).map((_, index) => (
                             <tr key={index} className="bg-white dark:bg-gray-800">
                                 {
-                                    Object.keys(data[0]).map((_column, index) => <td key={index} className="px-6 py-6 whitespace-nowrap"></td>)
+                                    columns.map((column, index) => column.active && <td key={index} className="px-6 py-6 whitespace-nowrap"></td>)
                                 }
                             </tr>
                         ))
