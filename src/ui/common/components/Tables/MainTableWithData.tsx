@@ -1,39 +1,48 @@
-import { Tercero } from "../../../../domain/administracion/terceros/entities/tercero"
 import { CheckTable } from "../../../../shared/types/check_table"
 import PaginationMainTable, { PropsPaginationMainTable } from "../Paginations/PaginationMainTable"
-interface MainTableWithDataProps<T> {
+interface MainTableWithDataProps<T extends Record<string, any>> {
     pagination: PropsPaginationMainTable
     data: T[]
     columns: CheckTable[]
+    handdleEdit: (id: string) => void
+    haddeDelete: (id: string) => void
 }
-export function MainTableWithData<T extends Tercero>({ pagination, data, columns }: MainTableWithDataProps<T>) {
+export function MainTableWithData<T extends Record<string, any>>({ pagination, data, columns, haddeDelete, handdleEdit }: MainTableWithDataProps<T>) {
     return <>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 w-full">
                     <tr>
                         {
                             // no se muestra la columna si esta desactivada
-                            columns.map((column, index) => column.active && <th key={index} className="px-6 py-3 text-xs font-semibold tracking-wider">{column.name}</th>)
+                            columns.map((column, index) => column.active && <th key={index} className="px-6 py-3 text-xs font-semibold tracking-wider uppercase">{column.name}</th>)
                         }
+                        <th className="px-6 py-3 text-xs font-semibold tracking-wider uppercase">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y dark:divide-gray-700 w-full">
                     {
                         // mostrar tos los datos da la data
                         data.map((row, index) => (
                             <tr key={index} className="bg-white dark:bg-gray-800">
                                 {
-                                    columns.map((column, index) => column.active && <td key={index} className="px-6 py-4 whitespace-nowrap">{row[column.name]}</td>)
+                                    columns.map((column, index) => column.active && <td key={index} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-400 w-full">{row[column.name]}</td>)
                                 }
+                                <td>
+                                    <div className="flex justify-center items-center gap-2">
+                                        <button className="w-6 h-6 bg-red-500 text-white rounded-full hover:bg-red-600" onClick={() => haddeDelete(row.idTable)}>X</button>
+                                        <button className="w-6 h-6 bg-green-500 text-white rounded-full hover:bg-green-600" onClick={() => handdleEdit(row.idTable)}>E</button>
+                                    </div>
+                                </td>
                             </tr>
+
                         ))
                     }
                     {
                         data.length !== 10 && Array.from({ length: 10 - data.length + 1 }, (_, i) => i).map((_, index) => (
                             <tr key={index} className="bg-white dark:bg-gray-800">
                                 {
-                                    Object.keys(data[0]).map((column, index) => <td key={index} className="px-6 py-6 whitespace-nowrap"></td>)
+                                    Object.keys(data[0]).map((_column, index) => <td key={index} className="px-6 py-6 whitespace-nowrap"></td>)
                                 }
                             </tr>
                         ))
