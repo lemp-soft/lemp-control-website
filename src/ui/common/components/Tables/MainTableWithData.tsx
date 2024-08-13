@@ -1,4 +1,6 @@
 import { CheckTable } from "../../../../shared/types/check_table"
+import DeleteIcon from "../Icons/DeleteIcon"
+import EditIcon from "../Icons/EditIcon"
 import PaginationMainTable, { PropsPaginationMainTable } from "../Paginations/PaginationMainTable"
 interface MainTableWithDataProps<T extends Record<string, any>> {
     pagination: PropsPaginationMainTable
@@ -25,14 +27,14 @@ export function MainTableWithData<T extends Record<string, any>>({ pagination, d
                     {
                         // mostrar tos los datos da la data
                         data.map((row, index) => (
-                            <tr key={index} className="bg-white dark:bg-gray-800">
+                            <tr key={index} className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900">
                                 {
                                     columns.map((column, index) => column.active && <td key={index} className={`px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-400 w-full ${handdleClickOnRow ? 'cursor-pointer' : ''}`} onClick={() => handdleClickOnRow && handdleClickOnRow(row.idTable)} title={`${row[column.name]}`}>{row[column.name]}</td>)
                                 }
                                 <td>
                                     <div className="flex justify-center items-center gap-2">
-                                        <button className="w-6 h-6 bg-red-500 text-white rounded-full hover:bg-red-600" onClick={() => haddeDelete(row.idTable)}>X</button>
-                                        <button className="w-6 h-6 bg-green-500 text-white rounded-full hover:bg-green-600" onClick={() => handdleEdit(row.idTable)}>E</button>
+                                        <button className="w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600" onClick={() => haddeDelete(row.idTable)}><DeleteIcon fill="#ffffff" className="p-1" /></button>
+                                        <button className="w-8 h-8 bg-green-500 text-white rounded-full hover:bg-green-600" onClick={() => handdleEdit(row.idTable)}><EditIcon fill="#ffffff" className="p-1" /></button>
                                     </div>
                                 </td>
                             </tr>
