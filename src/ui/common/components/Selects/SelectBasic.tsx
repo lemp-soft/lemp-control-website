@@ -1,5 +1,5 @@
 import { RegisterOptions, UseFormRegisterReturn } from "react-hook-form"
-import { TerceroForm } from "../../../administracion/terceros/pages/CrearTercero"
+import { TerceroForm } from "@ui/administracion/terceros/components/Imputs/InputForm"
 
 interface OptintSelect {
     value: string

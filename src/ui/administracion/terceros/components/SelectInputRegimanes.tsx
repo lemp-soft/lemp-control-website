@@ -1,6 +1,6 @@
 import { RegisterOptions, UseFormRegisterReturn } from "react-hook-form"
 import SelectBasic from "../../../common/components/Selects/SelectBasic"
-import { TerceroForm } from "../pages/CrearTercero"
+import { TerceroForm } from "./Imputs/InputForm"
 interface SelectInputRegimenesProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
     register: <TercerosFormKesy extends keyof TerceroForm>(name: TercerosFormKesy, options?: RegisterOptions<TerceroForm, TercerosFormKesy>) => UseFormRegisterReturn<TercerosFormKesy>
     registerOptions: RegisterOptions<TerceroForm, keyof TerceroForm>

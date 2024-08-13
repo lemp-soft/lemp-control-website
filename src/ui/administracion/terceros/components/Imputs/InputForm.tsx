@@ -1,7 +1,13 @@
 import { RegisterOptions, UseFormRegisterReturn } from "react-hook-form"
-import { TerceroForm } from "../../pages/CrearTercero" 
 import InputFormBasic from "@ui/common/components/Inputs/InputForm"
 import InputLabelForm from "@common/components/Inputs/InputLabelForm"
+import { TerceroCreateDTO } from "@domain/administracion/terceros/entities/tercero"
+export interface TerceroForm extends Omit<TerceroCreateDTO, 'codigo_ciiu'> {
+    actividad_economica: number
+    segundo_apellido: string
+    segundo_nombre: string
+}
+export type TercerosFormKesy = keyof TerceroForm
 interface InputFormProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string
     register: <TercerosFormKesy extends keyof TerceroForm>(name: TercerosFormKesy, options?: RegisterOptions<TerceroForm, TercerosFormKesy>) => UseFormRegisterReturn<TercerosFormKesy>

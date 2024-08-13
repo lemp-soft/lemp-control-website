@@ -2,27 +2,18 @@ import ContainerLayout from "../../../common/layouts/ContainerLayout"
 import MainLayout from "../../../common/layouts/MainLayout"
 import SearchInputActividadEconomica from "../components/SearchInputActividadEconomica"
 import SearchInputUbicacion from "../components/SearchInputUbicacion"
-import InputBasic from "../components/Imputs/InputForm"
+import InputBasic, { TerceroForm } from "../components/Imputs/InputForm"
 import SelectInputResponsabilidades from "../components/SelectInputResponsabilidades"
 import SelectInputRegimanes from "../components/SelectInputRegimanes"
 import SelectInputActive from "../components/SelectInputActive"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { TerceroCreateDTO } from "../../../../domain/administracion/terceros/entities/tercero"
 import { useCrearTercero } from "../hooks"
 import { useEffect } from "react"
-export interface TerceroForm extends Omit<TerceroCreateDTO, 'codigo_ciiu'> {
-    actividad_economica: number
-    segundo_apellido: string
-    segundo_nombre: string
-}
-export type TercerosFormKesy = keyof TerceroForm
+import SelectInputTipoTerceros from "../components/SelectInputTipoTerceros"
 // import { useEffect } from "react"
 const CrearTercero = () => {
     const { crearTercero } = useCrearTercero()
-    const { register, handleSubmit, setValue, watch } = useForm<TerceroForm>()
-    useEffect(() => {
-        console.log(watch())
-    }, [watch()])
+    const { register, handleSubmit, setValue } = useForm<TerceroForm>()
     const onSubmit: SubmitHandler<TerceroForm> = (data: TerceroForm) => {
         console.log(data)
         crearTercero({
@@ -51,7 +42,7 @@ const CrearTercero = () => {
                     <h1 className="text-2xl font-bold my-4">Crear un Tercero</h1>
                     <div className="w-full h-full p-4 bg-white rounded-2xl">
                         <form className="mt-8 grid gap-6 mb-6 md:grid-cols-4" onSubmit={handleSubmit(onSubmit)}>
-                            {/* <SelectInputTipoTerceros register={register} registerName="tipo" registerOptions={{ required: true }} /> */}
+                            <SelectInputTipoTerceros register={register} registerName="tipo" registerOptions={{ required: true }} />
                             <InputBasic type="number" id="first_name" placeholder="#########" required register={register} label="Numero de identificacion :" registerName="nit" registerOptions={{ required: true }} />
                             <InputBasic className="col-span-2" type="text" id="Razon_social" placeholder="#########" label="Razon social :" required register={register} registerName="razon_social" registerOptions={{ required: true }} />
                             <InputBasic type="text" id="Primer_apellido" placeholder="#########" label="Primer Apellido :" required register={register} registerName="primer_apellido" registerOptions={{ required: true }} />
