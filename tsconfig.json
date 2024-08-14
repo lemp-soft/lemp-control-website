@@ -38,6 +38,9 @@
     "@common/*": [
       "src/ui/common/*"
     ],
+    "@shared/*": [
+      "src/shared/*"
+    ],
   },
   },
   "include": [

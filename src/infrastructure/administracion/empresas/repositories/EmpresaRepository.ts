@@ -25,7 +25,7 @@ export class EmpresaRepository implements Repository {
         const response = await this.apiEmpresa.putEmpresa(empresa, codigo);
         return response;
     }
-    public async deleteEmpresa(codigo: number): Promise<void> {
+    public async deleteEmpresa(codigo: string): Promise<void> {
         await this.apiEmpresa.deleteEmpresa(codigo);
     }
 }

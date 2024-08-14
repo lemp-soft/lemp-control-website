@@ -49,8 +49,9 @@ export class EmpresaApi {
         const queryPagina = `?pagina=${pagina}`
         const queryMax = max ? `&max=${max}` : ''
         const querySearch = search ? `&search=${search}` : ''
+        const query = querySearch + queryPagina + queryMax
         try {
-            const response = await fetch(`http://127.0.0.1:800/api/v1/empresas${queryPagina}${queryMax}${querySearch}`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/empresas${query}`, {
                 headers: {
                     AuthUsuarioControl: localStorage.getItem('token') ?? ''
                 }
@@ -119,9 +120,9 @@ export class EmpresaApi {
             throw new Error("Error al modificar la empresa");
         }
         }
-    async deleteEmpresa(codigo: number): Promise<void> {
+    async deleteEmpresa(codigo: string): Promise<void> {
         try {
-            const response = await fetch(`http://127.0.0.1:800/api/v1/empresas/${codigo}`,{
+            const response = await fetch(`http://127.0.0.1:8000/api/v1/empresas/${codigo}`,{
                 method: 'DELETE',
                 headers:{
                     AdminAuthControl: localStorage.getItem('token') ?? ''

@@ -4,5 +4,5 @@ export abstract class EmpresasRepository {
     public abstract getEmpresa(codigo: number): Promise<Empresa>;
     public abstract createEmpresa(empresa: EmpresaCreateDTO): Promise<Empresa>;
     public abstract updateEmpresa(empresa: EmpresaUpdateDTO, codigo: number): Promise<boolean>;
-    public abstract deleteEmpresa(codigo: number): Promise<void>;
+    public abstract deleteEmpresa(codigo: string): Promise<void>;
 }
