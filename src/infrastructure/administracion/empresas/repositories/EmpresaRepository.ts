@@ -1,12 +1,31 @@
-import { Empresa } from "../../../../domain/administracion/empresas/entities/empresa";
-import { GetEmpresasPorNitDeTercero } from "../../../../domain/administracion/empresas/repositories/empresasRepository";
+import { Empresa, EmpresaCreateDTO, EmpresaUpdateDTO } from "@domain/administracion/empresas/entities/empresa";
+import { EmpresasRepository as Repository } from "@domain/administracion/empresas/repositories/empresasRepository";
 import { EmpresaApi } from "../api/EmpresaApi";
-export class EmpresaRepository implements GetEmpresasPorNitDeTercero {
-    private api: EmpresaApi;
+import { EmpresaApiAdapter } from "../adapters/EmpresaApiAdapter";
+export class EmpresaRepository implements Repository {
+    private apiEmpresa: EmpresaApi;
+
     constructor() {
-        this.api = new EmpresaApi();
+        this.apiEmpresa = new EmpresaApi();
     }
-    getEmpresaPorNitDeTercero(nit: number): Promise<Empresa[]> {
-        return this.api.getEmpresaPorNitDeTercero(nit);
+
+    public async getEmpresas(search?: string, pagina?: number, max?: number): Promise<Empresa[]> {
+        const empresas = await this.apiEmpresa.getEmpresas(search, pagina, max);
+        return EmpresaApiAdapter.ApiToEntityList(empresas);
+    }
+    public async getEmpresa(codigo: number): Promise<Empresa> {
+        const empresa = await this.apiEmpresa.getEmpresa(codigo);
+        return EmpresaApiAdapter.ApiToEntity(empresa);
+    }
+    public async createEmpresa(empresa: EmpresaCreateDTO): Promise<Empresa> {
+        const empresaApiResult = await this.apiEmpresa.postEmpresa(empresa);
+        return EmpresaApiAdapter.ApiToEntity(empresaApiResult);
+    }
+    public async updateEmpresa(empresa: EmpresaUpdateDTO, codigo: number): Promise<boolean> {
+        const response = await this.apiEmpresa.putEmpresa(empresa, codigo);
+        return response;
+    }
+    public async deleteEmpresa(codigo: number): Promise<void> {
+        await this.apiEmpresa.deleteEmpresa(codigo);
     }
 }
