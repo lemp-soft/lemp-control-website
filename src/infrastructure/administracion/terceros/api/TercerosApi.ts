@@ -47,7 +47,7 @@ export class TercerosApi {
         try {
             const response = await fetch('http://127.0.0.1:8000/api/v1/terceros' + urlPage + urlElementosPorPagina + urlSearch, {
                 headers: {
-                    AdminAuthControl: localStorage.getItem('token') ?? ''
+                    AuthUsuarioControl: localStorage.getItem('token') ?? ''
                 }
             })
             const data = await response.json() as GetTercerosFetchResponse
